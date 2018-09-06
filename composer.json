@@ -1,0 +1,32 @@
+{
+  "name": "wearesho-team/google-autocomplete",
+  "description": "Service for searching cities and streets using passed input value",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Beton",
+      "email": "aleksa.yagich@gmail.com"
+    },
+    {
+      "name": "Roman Varkuta",
+      "email": "roman.varkuta@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Wearesho\\GoogleAutocomplete\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Wearesho\\GoogleAutocomplete\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": ">7.1",
+    "horat1us/environment-config": "^1.2",
+    "guzzlehttp/guzzle": "^6.3",
+    "phpunit/phpunit": "^7.3"
+  }
+}
