@@ -84,7 +84,7 @@ $searchQuery = new GoogleAutocomplete\SearchQuery(
 );
 ```
 
-## Receive suggestions
+### Receive suggestions
 
 ```php
 <?php
@@ -111,3 +111,12 @@ return [
     ],
 ];
 ```
+
+## Authors
+
+- [Alexander Yagich](mailto:aleksa.yagich@gmail.com)
+- [Roman Varkuta](mailto:roman.varkuta@gmail.com)
+
+## License
+
+- [MIT](./LICENSE)
