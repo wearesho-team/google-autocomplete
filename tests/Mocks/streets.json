@@ -1,0 +1,205 @@
+{
+  "predictions": [
+    {
+      "description": "Сумская улица, Кременчуг, Полтавская область, Украина",
+      "id": "a388e7ddf58597a01b4ed697f4172d2d8b09e783",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "EmLQodGD0LzRgdC60LDRjyDRg9C70LjRhtCwLCDQmtGA0LXQvNC10L3Rh9GD0LMsINCf0L7Qu9GC0LDQstGB0LrQsNGPINC-0LHQu9Cw0YHRgtGMLCDQo9C60YDQsNC40L3QsA",
+      "reference": "CnRmAAAAJvnGV-_VytkS7oykBBBbAKpg1rTowZ0YStcOGwzNPVfoAyt3pILiQP8LyYzeXNU_ZRE825NnR1MTJ-Ski-jez4S5QIZgC8dIFkuv1add-p5sPV-tPKoT6fAdVL4iKogG8rhtV_MkN6FfTfq4A0po4BIQC3PI0ZGgigwn9XG72AGM9xoUyZlLGERi_kRDs2deJzN7WfbvKjA",
+      "structured_formatting": {
+        "main_text": "Сумская улица",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Кременчуг, Полтавская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Сумская улица"
+        },
+        {
+          "offset": 15,
+          "value": "Кременчуг"
+        },
+        {
+          "offset": 26,
+          "value": "Полтавская область"
+        },
+        {
+          "offset": 46,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "route",
+        "geocode"
+      ]
+    },
+    {
+      "description": "улица Сумская, Харьков, Харьковская область, Украина",
+      "id": "a249daeeea1bdfa22ea189f4367325eb29dad571",
+      "matched_substrings": [
+        {
+          "length": 13,
+          "offset": 0
+        }
+      ],
+      "place_id": "EmDRg9C70LjRhtCwINCh0YPQvNGB0LrQsNGPLCDQpdCw0YDRjNC60L7Qsiwg0KXQsNGA0YzQutC-0LLRgdC60LDRjyDQvtCx0LvQsNGB0YLRjCwg0KPQutGA0LDQuNC90LA",
+      "reference": "CnRkAAAA9whYsF19wTDNOAv4JCK8SyxeIWG_qIWJOcdbJOzgWNVnG4C3ExyMVvOnKyuZ45a5ft3uK4uhNaOCz1h3dlO0Km8TUaqpN1u6RbWF5Oy2hSskmWGWwMxd_EMSxrXTLjJqcTRX_DT2Sj0hK7CWafkechIQBbdtVHc1tKgKP8kfH0vlARoUtrM6gSxDF8sVQEFEScIWEAw5bJg",
+      "structured_formatting": {
+        "main_text": "улица Сумская",
+        "main_text_matched_substrings": [
+          {
+            "length": 13,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Харьков, Харьковская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "улица Сумская"
+        },
+        {
+          "offset": 15,
+          "value": "Харьков"
+        },
+        {
+          "offset": 24,
+          "value": "Харьковская область"
+        },
+        {
+          "offset": 45,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "route",
+        "geocode"
+      ]
+    },
+    {
+      "description": "Сумская улица, Мерефа, Харьковская область, Украина",
+      "id": "c2b1a8e43d69c6aa956badbe582c2b5cf5f4f014",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "El7QodGD0LzRgdC60LDRjyDRg9C70LjRhtCwLCDQnNC10YDQtdGE0LAsINCl0LDRgNGM0LrQvtCy0YHQutCw0Y8g0L7QsdC70LDRgdGC0YwsINCj0LrRgNCw0LjQvdCw",
+      "reference": "CnRiAAAAGnpQ-iOsuqJnu9gn4G4Buc_uvkHLcqcF1WDncqZ6ArLTEf2G1iXsawPPsCjIHrJyK-EIjOdpUmLSB5LCce4IamLnwKxIcZYNa2ijMriPe7JAQnvvFPTUCqj6OhwHYuaQrAZ2-Yh7ss-fs2GEaB880xIQdho6RzA8c06mRcAovk3c6RoU0BL-rAfQuk6notED_N1p5zGCCoI",
+      "structured_formatting": {
+        "main_text": "Сумская улица",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Мерефа, Харьковская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Сумская улица"
+        },
+        {
+          "offset": 15,
+          "value": "Мерефа"
+        },
+        {
+          "offset": 23,
+          "value": "Харьковская область"
+        },
+        {
+          "offset": 44,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "route",
+        "geocode"
+      ]
+    },
+    {
+      "description": "Сумская улица, Черновцы, Черновицкая область, Украина",
+      "id": "46decf374eceb97072a51266448beb5080c0fed8",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "EmLQodGD0LzRgdC60LDRjyDRg9C70LjRhtCwLCDQp9C10YDQvdC-0LLRhtGLLCDQp9C10YDQvdC-0LLQuNGG0LrQsNGPINC-0LHQu9Cw0YHRgtGMLCDQo9C60YDQsNC40L3QsA",
+      "reference": "CnRmAAAAF4nQIIz3gCuUjD79gaVuHPhqMlOzMzXoj0aXwiA2zmqnIrDtu7RV2nIifXteEoSl2oWnjqrgq2VdGcUcweOegMJAtSJyFnhHc5asflc9I1Uu8brNqawb1wOvMcgClwl80Ds3lsUZBbxRKyUcfqwaaRIQDG30JZByd9WmoLPny0kcjRoUDNVUHp-TyeZdykPcnKvuIa5Wh-0",
+      "structured_formatting": {
+        "main_text": "Сумская улица",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Черновцы, Черновицкая область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Сумская улица"
+        },
+        {
+          "offset": 15,
+          "value": "Черновцы"
+        },
+        {
+          "offset": 25,
+          "value": "Черновицкая область"
+        },
+        {
+          "offset": 46
+        }
+      ],
+      "types": [
+        "route",
+        "geocode"
+      ]
+    },
+    {
+      "id": "e06250c66c5823ff0b7631ec7dcbe2ae620c4a1d",
+      "matched_substrings": [
+        {
+          "length": 13,
+          "offset": 0
+        }
+      ],
+      "place_id": "EjPRg9C70LjRhtCwINCh0YPQvNGB0LrQsNGPLCDQmtC40LXQsiwg0KPQutGA0LDQuNC90LA",
+      "reference": "CkQ3AAAA53RHI0pKexjHJmxaxOoRxlTlLjYBPjN_9rijodTr0IOQaRLpYEtwFlnvWWesyqJnqKCGZy8BHbZ7T551awRxvBIQZ0KNdIrRylMorn1cSpdhqhoUvQkgCi66-QUFaY-B5wmtzqaoXbA",
+      "structured_formatting": {
+        "main_text": "улица Сумская",
+        "main_text_matched_substrings": [
+          {
+            "length": 13,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Киев, Украина"
+      },
+      "types": [
+        "route",
+        "geocode"
+      ]
+    }
+  ],
+  "status": "OK"
+}

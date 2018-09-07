@@ -24,9 +24,13 @@ class BootstrapTest extends TestCase
         $bootstrap = new GoogleAutocomplete\Yii\Bootstrap();
         $bootstrap->bootstrap($application);
         $this->assertTrue(\Yii::$container->has(GoogleAutocomplete\ConfigInterface::class));
-        $this->assertInstanceOf(GoogleAutocomplete\EnvironmentConfig::class,
-            \Yii::$container->get(GoogleAutocomplete\ConfigInterface::class));
-        $this->assertStringEndsWith('wearesho-team/google-autocomplete/src',
-            \Yii::getAlias('@Wearesho/GoogleAutocomplete'));
+        $this->assertInstanceOf(
+            GoogleAutocomplete\EnvironmentConfig::class,
+            \Yii::$container->get(GoogleAutocomplete\ConfigInterface::class)
+        );
+        $this->assertStringEndsWith(
+            'wearesho-team/google-autocomplete/src',
+            \Yii::getAlias('@Wearesho/GoogleAutocomplete')
+        );
     }
 }

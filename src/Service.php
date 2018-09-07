@@ -4,14 +4,31 @@ namespace Wearesho\GoogleAutocomplete;
 
 use GuzzleHttp;
 
+use Wearesho\GoogleAutocomplete\Enums;
+
 /**
  * Class Service
  * @package Wearesho\GoogleAutocomplete
  */
-class Service
+class Service implements ServiceInterface
 {
     protected const CITIES = '(cities)';
     protected const ADDRESS = 'address';
+    protected const STATUS = 'status';
+    protected const DESCRIPTION = 'description';
+    protected const PREDICTION_COLLECTION = 'predictions';
+    protected const PREDICTION_SINGLE = 'prediction';
+    protected const TERM_COLLECTION = 'terms';
+    protected const TERM_VALUE = 'value';
+    protected const STRUCTURED_FORMATTING = 'structured_formatting';
+    protected const MAIN_TEXT = 'main_text';
+    protected const INPUT = 'input';
+    protected const TYPE = 'types';
+    protected const LANGUAGE = 'language';
+    protected const COMPONENTS = 'components';
+    protected const COUNTRY = 'country:';
+    protected const KEY = 'key';
+    protected const MIN_SIMILARITY_PERCENTAGE = 75;
 
     /** @var ConfigInterface */
     protected $config;
@@ -25,60 +42,147 @@ class Service
         $this->client = $client;
     }
 
-    public function load(SearchDataInterface $searchData): array
+    /**
+     * @param SearchQueryInterface $query
+     *
+     * @return LocationCollection
+     * @throws Exceptions\InvalidResponse
+     * @throws Exceptions\QueryException
+     * @throws GuzzleHttp\Exception\GuzzleException
+     */
+    public function load(SearchQueryInterface $query): LocationCollection
     {
-        $googleMapsType = [
-            Type::STREET => static::ADDRESS,
-            Type::CITY => static::CITIES,
-        ][$searchData->getType()];
-
+        $queryType = $query->getType();
+        
         $response = $this->client->request('GET', $this->config->getUrl(), [
-            'query' => [
-                'input' => $searchData->getInput(),
-                'types' => $googleMapsType,
-                'components' => 'country:' . ConfigInterface::UKRAINE_CODE,
-                'language' => $searchData->getLanguage(),
-                'key' => $this->config->getKey(),
+            GuzzleHttp\RequestOptions::QUERY => [
+                static::INPUT => $query->getInput(),
+                static::TYPE => $queryType,
+                static::COMPONENTS => static::COUNTRY . ConfigInterface::UKRAINE,
+                static::LANGUAGE => $query->getLanguage(),
+                static::KEY => $this->config->getKey(),
             ],
         ]);
 
-        $data = json_decode($response->getBody(), true);
-        if (json_last_error() !== JSON_ERROR_NONE || !array_key_exists('status', $data)) {
-            throw new Exceptions\InvalidResponse((string)$response->getBody());
+        $responseBody = $response->getBody();
+        $data = json_decode($responseBody, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE || !array_key_exists(static::STATUS, $data)) {
+            throw new Exceptions\InvalidResponse($response);
         }
 
-        $status = $data['status'];
-        if ($status === Status::ZERO_RESULTS) {
-            return [];
+        $status = new Enums\SearchStatus($data[static::STATUS]);
+
+        $this->validateSuccessStatus($status, $query);
+
+        if ($this->isStatusZeroResults($status) || !$this->checkPredictionCollectionExist($data)) {
+            return new LocationCollection([]);
         }
 
-        if ($status !== Status::OK) {
-            throw new Exceptions\RequestException("Request failed with status {$status}: {$response->getBody()}");
+        $predictions = $data[static::PREDICTION_COLLECTION];
+
+        if ($queryType->equals(Enums\AddressPart::CITY())) {
+            return $this->fetchCities($predictions);
+        } else {
+            return $this->fetchStreets($predictions, $query->getCity());
+        }
+    }
+
+    /**
+     * @param Enums\SearchStatus   $status
+     * @param SearchQueryInterface $query
+     *
+     * @throws Exceptions\QueryException
+     */
+    protected function validateSuccessStatus(Enums\SearchStatus $status, SearchQueryInterface $query): void
+    {
+        if (!$status->equals(Enums\SearchStatus::OK()) && !$this->isStatusZeroResults($status)) {
+            throw new Exceptions\QueryException($query, $status);
+        }
+    }
+
+    protected function checkMainTextExist(array $prediction): bool
+    {
+        return !(!array_key_exists(static::STRUCTURED_FORMATTING, $prediction)
+            || !array_key_exists(static::MAIN_TEXT, $prediction[static::STRUCTURED_FORMATTING]));
+    }
+
+    protected function isStatusZeroResults(Enums\SearchStatus $status): bool
+    {
+        return $status->equals(Enums\SearchStatus::ZERO_RESULTS());
+    }
+
+    protected function checkDescriptionExist(array $prediction): bool
+    {
+        return array_key_exists(static::DESCRIPTION, $prediction);
+    }
+
+    protected function checkTermsExist(array $prediction): bool
+    {
+        return array_key_exists(static::TERM_COLLECTION, $prediction);
+    }
+    
+    protected function checkTermValueExist(array $term): bool
+    {
+        return array_key_exists(static::TERM_VALUE, $term);
+    }
+
+    protected function checkPredictionCollectionExist(array $data): bool
+    {
+        return array_key_exists(static::PREDICTION_COLLECTION, $data);
+    }
+
+    private function fetchCities(array $predictions): LocationCollection
+    {
+        $locations = new LocationCollection();
+
+        /** @var array $prediction */
+        foreach ($predictions as $prediction) {
+            if ($this->checkMainTextExist($prediction)) {
+                $locations->append(new Location($prediction[static::STRUCTURED_FORMATTING][static::MAIN_TEXT]));
+            }
         }
 
-        if (!array_key_exists('predictions', $data)) {
-            return [];
-        }
+        return $locations;
+    }
 
-        $result = [];
+    private function fetchStreets(array $predictions, string $city = null): LocationCollection
+    {
+        $locations = new LocationCollection();
 
-        foreach ($data['predictions'] as $prediction) {
-            if ($googleMapsType === static::CITIES) {
-                if (array_key_exists('description', $prediction)) {
-                    $result[] = $prediction['description'];
+        if (!is_null($city) && !empty($city)) {
+            foreach ($predictions as $prediction) {
+                if (!$this->checkDescriptionExist($prediction) && !$this->checkTermsExist($prediction)) {
+                    continue;
                 }
-                continue;
+                
+                foreach ($prediction[static::TERM_COLLECTION] as $term) {
+                    if (!$this->checkTermValueExist($term)) {
+                        continue;
+                    }
+
+                    similar_text($city, $term[static::TERM_VALUE], $percentage);
+
+                    if ((float)$percentage >= static::MIN_SIMILARITY_PERCENTAGE) {
+                        $locations->append(new Location($prediction[static::DESCRIPTION]));
+
+                        continue;
+                    }
+                }
             }
 
-            if (!array_key_exists('structured_formatting', $prediction)
-                || !array_key_exists('main_text', $prediction['structured_formatting'])
-            ) {
-                continue;
+            if (empty($locations)) {
+                return $this->fetchStreets($predictions);
             }
-
-            $result[] = $prediction['structured_formatting']['main_text'];
+        } else {
+            /** @var array $prediction */
+            foreach ($predictions as $prediction) {
+                if ($this->checkDescriptionExist($prediction)) {
+                    $locations->append(new Location($prediction[static::DESCRIPTION]));
+                }
+            }
         }
 
-        return $result;
+        return $locations;
     }
 }

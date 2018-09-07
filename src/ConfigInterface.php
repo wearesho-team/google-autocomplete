@@ -8,7 +8,7 @@ namespace Wearesho\GoogleAutocomplete;
  */
 interface ConfigInterface
 {
-    public const UKRAINE_CODE = 'ua';
+    public const UKRAINE = 'ua';
 
     public function getUrl(): string;
 
