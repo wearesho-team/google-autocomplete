@@ -33,7 +33,7 @@ Or use [Environment Config](./src/EnvironmentConfig.php) to load variables from 
 $config = new \Wearesho\GoogleAutocomplete\EnvironmentConfig('GOOGLE_SERVICE_AUTOCOMPLETE');
 ```
 
-Create service
+### Create service
 
 ```php
 <?php
@@ -47,8 +47,9 @@ $service = new \Wearesho\GoogleAutocomplete\Service(
 
 ```
 
-Create search data entity
+### Create search data entity
 
+#### Searching cities
 ```php
 <?php
 
@@ -56,13 +57,34 @@ use Wearesho\GoogleAutocomplete;
 
 $searchQuery = new GoogleAutocomplete\SearchQuery(
     'Value from input',
-    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
-    $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
-    $city = 'city name' // optional
+    $addressType = GoogleAutocomplete\Enums\AddressPart::CITY(),
+    $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
 );
 ```
 
-Receive suggestions
+#### Searching streets
+```php
+<?php
+
+use Wearesho\GoogleAutocomplete;
+
+// all streets
+$searchQuery = new GoogleAutocomplete\SearchQuery(
+    'Value from input',
+    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
+    $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
+);
+
+// Safe searching streets in concrete city
+$searchQuery = new GoogleAutocomplete\SearchQuery(
+    'Value from input',
+    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
+    $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
+    $city = 'city name'
+);
+```
+
+## Receive suggestions
 
 ```php
 <?php
