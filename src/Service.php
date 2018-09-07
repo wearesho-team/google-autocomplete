@@ -23,7 +23,6 @@ class Service implements ServiceInterface
     protected const TERM_VALUE = 'value';
     protected const STRUCTURED_FORMATTING = 'structured_formatting';
     protected const MAIN_TEXT = 'main_text';
-    protected const PARAMETERS = 'query';
     protected const INPUT = 'input';
     protected const TYPE = 'types';
     protected const LANGUAGE = 'language';
@@ -56,8 +55,8 @@ class Service implements ServiceInterface
     {
         $queryType = $query->getType();
         
-        $response = $this->client->request(static::METHOD_GET, $this->config->getUrl(), [
-            static::PARAMETERS => [
+        $response = $this->client->request('GET', $this->config->getUrl(), [
+            GuzzleHttp\RequestOptions::QUERY => [
                 static::INPUT => $query->getInput(),
                 static::TYPE => $queryType,
                 static::COMPONENTS => static::COUNTRY . ConfigInterface::UKRAINE,
@@ -148,7 +147,7 @@ class Service implements ServiceInterface
         return $locations;
     }
 
-    private function fetchStreets(array $predictions, ?string $city): LocationCollection
+    private function fetchStreets(array $predictions, string $city = null): LocationCollection
     {
         $locations = new LocationCollection();
 
@@ -168,13 +167,13 @@ class Service implements ServiceInterface
                     if ((float)$percentage >= static::MIN_SIMILARITY_PERCENTAGE) {
                         $locations->append(new Location($prediction[static::DESCRIPTION]));
 
-                        break;
+                        continue;
                     }
                 }
             }
 
             if (empty($locations)) {
-                return $this->fetchStreets($predictions, null);
+                return $this->fetchStreets($predictions);
             }
         } else {
             /** @var array $prediction */
