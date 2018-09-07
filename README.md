@@ -22,16 +22,15 @@ $config = new \Wearesho\GoogleAutocomplete\Config(
 
 Or use [Environment Config](./src/EnvironmentConfig.php) to load variables from environment
 
-```dotenv
-GOOGLE_SERVICE_AUTOCOMPLETE_URL=https://google.com/
-GOOGLE_SERVICE_AUTOCOMPLETE_KEY=yourApiKey
-```
+|             Variable            | Required |               Description               |
+|:-------------------------------:|:--------:|:---------------------------------------:|
+| GOOGLE_SERVICE_AUTOCOMPLETE_URL | yes      | url for google-autocomplete-api service |
+| GOOGLE_SERVICE_AUTOCOMPLETE_KEY | yes      | your private key                        |
 
 ```php
 <?php
 
 $config = new \Wearesho\GoogleAutocomplete\EnvironmentConfig('GOOGLE_SERVICE_AUTOCOMPLETE');
-
 ```
 
 Create service
@@ -53,10 +52,13 @@ Create search data entity
 ```php
 <?php
 
-$searchData = new \Wearesho\GoogleAutocomplete\SearchData(
+use Wearesho\GoogleAutocomplete;
+
+$searchQuery = new GoogleAutocomplete\SearchQuery(
     'Value from input',
-    $addressType = \Wearesho\GoogleAutocomplete\Type::STREET,
-    $language = \Wearesho\GoogleAutocomplete\Language::RU
+    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
+    $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
+    $city = 'city name' // optional
 );
 ```
 
@@ -66,9 +68,10 @@ Receive suggestions
 <?php
 
 /** @var \Wearesho\GoogleAutocomplete\Service $service */
-/** @var \Wearesho\GoogleAutocomplete\SearchDataInterface $searchData */
+/** @var \Wearesho\GoogleAutocomplete\SearchQueryInterface $searchData */
 
 $suggestions = $service->load($searchData);
+$values = $suggestions->jsonSerialize();
 ```
 
 ## Yii2 configuration
