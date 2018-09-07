@@ -14,7 +14,6 @@ class Service implements ServiceInterface
 {
     protected const CITIES = '(cities)';
     protected const ADDRESS = 'address';
-    protected const METHOD_GET = 'GET';
     protected const STATUS = 'status';
     protected const DESCRIPTION = 'description';
     protected const PREDICTION_COLLECTION = 'predictions';
