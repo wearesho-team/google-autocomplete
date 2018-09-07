@@ -70,3 +70,19 @@ Receive suggestions
 
 $suggestions = $service->load($searchData);
 ```
+
+## Yii2 configuration
+
+If you need to configure your yii2 application, you can use [Bootstrap](./src/Yii/Bootstrap.php)
+
+```php
+<?php
+
+// config/main.php
+
+return [
+    'bootstrap' => [
+        'class' => \Wearesho\GoogleAutocomplete\Yii\Bootstrap::class,        
+    ],
+];
+```
