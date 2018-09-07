@@ -1,0 +1,210 @@
+{
+  "predictions": [
+    {
+      "description": "Харьков, Харьковская область, Украина",
+      "id": "fc121d72e13a3dcf140fc83d0807d1a4d5d3f224",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "ChIJiw-rY5-gJ0ERCr6kGmgYTC0",
+      "reference": "CmRdAAAAMIH55xNpQKXROys9FlbIn7hMsAyL1bBe9JqA9UYEaar83HTSCS-POdyWfQbIZossWOac2Sm00z2ozOFfJ77FXSUx9ch4UhTU5FPqS-uIxAwLKKP4Jw4tQ_fSuOROoAdmEhBkV4H5Vh0KNzhltPfiulNDGhRJn4175JShXtt-QdcF09EBntvLFA",
+      "structured_formatting": {
+        "main_text": "Харьков",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Харьковская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Харьков"
+        },
+        {
+          "offset": 9,
+          "value": "Харьковская область"
+        },
+        {
+          "offset": 30,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "locality",
+        "political",
+        "geocode"
+      ]
+    },
+    {
+      "description": "Харьково, Черниговская область, Украина",
+      "id": "a2ce4c3efa9198a2b06d5a1b6b04abb2c0ee64be",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "ChIJKTUXEdkDKkERtWiAgM74kC8",
+      "reference": "CnRhAAAAiwJhFDEjebHw9yg4uGh9vpt6dO9J1OSMkNQ4O4wJzsF6Ok8YyMZYjvHCtf4IrUr_DOPYYtn7Dd75r_0rni5ys4fmn2tkbvkxcwL4BCV2gW1M7b_X4oBs-nTy7Z3AuGJNHJqM73D-9zcoYlX-FYP4IxIQ4DQHwKh3KLcaB1xb-ShTqhoUDZu83x6Zam0Uu9CDS1bb9rMmOXA",
+      "structured_formatting": {
+        "main_text": "Харьково",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Черниговская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Харьково"
+        },
+        {
+          "offset": 10,
+          "value": "Черниговская область"
+        },
+        {
+          "offset": 32,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "locality",
+        "political",
+        "geocode"
+      ]
+    },
+    {
+      "description": "Харьковский горсовет, Харьковская область, Украина",
+      "id": "71cd939d8ae2ccbf1d72bd261c55830dfbf6e4a6",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "ChIJJW2OdJ-gJ0ER0sbjZlagetc",
+      "reference": "CoQBdgAAANsyJmBqkuHmu4I23WOaI1ILsjhpQPUvQ6BKEyr1WgoIXINQyOEihPKmxMDO9XC5q7D3zEquJrXv2shwc3qw7y9hrJikAastp409x80xHmz5uDw0SRPVFTdANVP4NkUSlWS5LeuM6zb-4uyHq5nf4Fld1eyoIGanZ-OZg10FoSvGEhAxEBtp9YpzmlQcVrwtB5fzGhSP4coQn8I26WBnwhI_1YghB3UoEg",
+      "structured_formatting": {
+        "main_text": "Харьковский горсовет",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Харьковская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Харьковский горсовет"
+        },
+        {
+          "offset": 22,
+          "value": "Харьковская область"
+        },
+        {
+          "offset": 43,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "administrative_area_level_3",
+        "political",
+        "geocode"
+      ]
+    },
+    {
+      "description": "Харьковцы, Полтавская область, Украина",
+      "id": "3c93de0ec2d63734627729caa5d09b3cea8f4c43",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "ChIJDzOwMkPY1UARZm1MTk_jHTs",
+      "reference": "CmRfAAAAGA_r65TbtGPRT18IE1zZFbSDp7vzD7AGuJabNK1KBG5gLxQtEeS1FHmNifmY6Vu8YzP7-cFcNmZm817TrUmN8TJCNPnDj-_gXLTKxpu6BqjZQD8ZVtDbyLMeK6XYg47yEhB5bMwLe8xObhCFhkxyPcyKGhRcFZ_FuVDEMwKgRJiFiqBxV6OjaQ",
+      "structured_formatting": {
+        "main_text": "Харьковцы",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Полтавская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Харьковцы"
+        },
+        {
+          "offset": 11,
+          "value": "Полтавская область"
+        },
+        {
+          "offset": 31,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "locality",
+        "political",
+        "geocode"
+      ]
+    },
+    {
+      "description": "Харьковка, Черкасская область, Украина",
+      "id": "3bdcf0d8dcd9123b9b99119b6927da4916b8f090",
+      "matched_substrings": [
+        {
+          "length": 7,
+          "offset": 0
+        }
+      ],
+      "place_id": "ChIJkTZrulZB0kARyBiLbENslCg",
+      "reference": "CmRfAAAAZPaZmLmicum8Of9AXIKFYVmoCvQZilpDuulJ8ax6Rd4gqCcNzWooG_tg5hlofOR0zJzi6Em6_M8n587I1ncsZZ4vVCk4ZlS3iwNMWuJFS5Kkyx90ZuJQASfSpwwGWsE0EhAwQUBM__KjerUInLHkXt0cGhR7Mqrb13Yuj8xSFr8SVbPoTvXhuQ",
+      "structured_formatting": {
+        "main_text": "Харьковка",
+        "main_text_matched_substrings": [
+          {
+            "length": 7,
+            "offset": 0
+          }
+        ],
+        "secondary_text": "Черкасская область, Украина"
+      },
+      "terms": [
+        {
+          "offset": 0,
+          "value": "Харьковка"
+        },
+        {
+          "offset": 11,
+          "value": "Черкасская область"
+        },
+        {
+          "offset": 31,
+          "value": "Украина"
+        }
+      ],
+      "types": [
+        "locality",
+        "political",
+        "geocode"
+      ]
+    }
+  ],
+  "status": "OK"
+}

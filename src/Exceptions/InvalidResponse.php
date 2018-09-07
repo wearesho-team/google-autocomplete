@@ -2,22 +2,25 @@
 
 namespace Wearesho\GoogleAutocomplete\Exceptions;
 
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * Class InvalidResponse
  * @package Wearesho\GoogleAutocomplete\Exceptions
  */
 class InvalidResponse extends \Exception
 {
-    /** @var string */
+    /** @var ResponseInterface */
     protected $response;
 
-    public function __construct(string $response, int $code = 0, \Throwable $previous = null)
+    public function __construct(ResponseInterface $response, int $code = 0, \Throwable $previous = null)
     {
-        parent::__construct("Invalid response: {$response}", $code, $previous);
         $this->response = $response;
+
+        parent::__construct("Response contain invalid data: {$response->getBody()->__toString()}", $code, $previous);
     }
 
-    public function getResponse(): string
+    public function getResponse(): ResponseInterface
     {
         return $this->response;
     }
