@@ -57,7 +57,7 @@ class Service implements ServiceInterface
         $response = $this->client->request('GET', $this->config->getUrl(), [
             GuzzleHttp\RequestOptions::QUERY => [
                 static::INPUT => $query->getInput(),
-                static::TYPE => $queryType->getValue(),
+                static::TYPE => $queryType->equals(Enums\AddressPart::CITY()) ? static::CITIES : $queryType->getValue(),
                 static::COMPONENTS => static::COUNTRY . ConfigInterface::UKRAINE,
                 static::LANGUAGE => $query->getLanguage()->getValue(),
                 static::KEY => $this->config->getKey(),
