@@ -1,4 +1,6 @@
-#Google autocomplete
+# Google AutoComplemte
+[![Build Status](https://travis-ci.org/wearesho-team/google-autocomplete.svg?branch=master)](https://travis-ci.org/wearesho-team/google-autocomplete)
+[![codecov](https://codecov.io/gh/wearesho-team/google-autocomplete/branch/master/graph/badge.svg)](https://codecov.io/gh/wearesho-team/google-autocomplete)
 
 This library allows you to search Ukrainian cities/streets using google api.
 
