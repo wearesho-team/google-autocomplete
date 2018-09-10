@@ -16,7 +16,7 @@ class SearchQuery implements SearchQueryInterface
         string $input,
         Enums\AddressPart $addressPart,
         Enums\SearchLanguage $searchLanguage,
-        string $city = null
+        ?string $city = null
     ) {
         $this->input = $input;
         $this->type = $addressPart;
