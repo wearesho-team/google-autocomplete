@@ -1,5 +1,6 @@
 #Google autocomplete
-This library allows you to search cities/streets using google api.
+
+This library allows you to search Ukrainian cities/streets using google api.
 
 ## Installation
 
@@ -15,17 +16,17 @@ Create configuration
 <?php
 
 $config = new \Wearesho\GoogleAutocomplete\Config(
-    $requestUrl = 'https://google.com/',
-    $apiKey = 'your personal api key'
+    $apiKey = 'your personal api key',
+    $requestUrl = 'https://google.com/' // optional
 );
 ```
 
 Or use [Environment Config](./src/EnvironmentConfig.php) to load variables from environment
 
-|             Variable            | Required |               Description               |
-|:-------------------------------:|:--------:|:---------------------------------------:|
-| GOOGLE_SERVICE_AUTOCOMPLETE_URL | no      | url for google-autocomplete-api service |
-| GOOGLE_SERVICE_AUTOCOMPLETE_KEY | yes      | your private key                        |
+| Variable | Required | Default value | Description |
+|:-------------------------------:|:--------:|:------------------------------------------------------------:|:---------------------------------------:|
+| GOOGLE_SERVICE_AUTOCOMPLETE_URL | no | https://maps.googleapis.com/maps/api/place/autocomplete/json | url for google-autocomplete-api service |
+| GOOGLE_SERVICE_AUTOCOMPLETE_KEY | yes |  | your private key |
 
 ```php
 <?php
@@ -90,9 +91,9 @@ $searchQuery = new GoogleAutocomplete\SearchQuery(
 <?php
 
 /** @var \Wearesho\GoogleAutocomplete\Service $service */
-/** @var \Wearesho\GoogleAutocomplete\SearchQueryInterface $searchData */
+/** @var \Wearesho\GoogleAutocomplete\SearchQueryInterface $searchQuery */
 
-$suggestions = $service->load($searchData);
+$suggestions = $service->load($searchQuery);
 $values = $suggestions->jsonSerialize();
 ```
 
