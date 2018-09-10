@@ -17,7 +17,7 @@ class EnvironmentConfig extends Environment\Config implements ConfigInterface
 
     public function getUrl(): string
     {
-        return $this->getEnv('URL', 'https://maps.googleapis.com/maps/api/place/autocomplete/json');
+        return $this->getEnv('URL', ConfigInterface::URL);
     }
 
     public function getKey(): string
