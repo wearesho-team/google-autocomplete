@@ -165,7 +165,7 @@ class Service implements ServiceInterface
 
                     similar_text($city, $term[static::TERM_VALUE], $percentage);
 
-                    if ((float)$percentage >= static::MIN_SIMILARITY_PERCENTAGE) {
+                    if ((double)$percentage >= static::MIN_SIMILARITY_PERCENTAGE) {
                         $locations->append(new Location($prediction[static::DESCRIPTION]));
 
                         continue;
@@ -173,7 +173,7 @@ class Service implements ServiceInterface
                 }
             }
 
-            if (empty($locations)) {
+            if (!$locations->count()) {
                 return $this->fetchStreets($predictions);
             }
         } else {
