@@ -14,7 +14,7 @@ class Config implements ConfigInterface
     /** @var string */
     protected $key;
 
-    public function __construct(string $url, string $key)
+    public function __construct(string $key, string $url = ConfigInterface::URL)
     {
         $this->url = $url;
         $this->key = $key;

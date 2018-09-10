@@ -45,7 +45,7 @@ class ServiceTest extends TestCase
         $stack = new GuzzleHttp\HandlerStack($this->mock);
         $stack->push($history);
         $this->client = new GuzzleHttp\Client(['handler' => $stack,]);
-        $this->fakeService = new Service(new Config(static::URL, static::KEY), $this->client);
+        $this->fakeService = new Service(new Config(static::KEY, static::URL), $this->client);
     }
 
     /**
