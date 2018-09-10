@@ -22,7 +22,7 @@ class ConfigTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fakeConfig = new Config(static::URL, static::KEY);
+        $this->fakeConfig = new Config(static::KEY, static::URL);
     }
 
     public function testGetUrl(): void
