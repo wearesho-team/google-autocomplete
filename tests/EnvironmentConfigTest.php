@@ -4,6 +4,7 @@ namespace Wearesho\GoogleAutocomplete\Tests;
 
 use PHPUnit\Framework\TestCase;
 
+use Wearesho\GoogleAutocomplete\ConfigInterface;
 use Wearesho\GoogleAutocomplete\EnvironmentConfig;
 
 /**
@@ -56,14 +57,13 @@ class EnvironmentConfigTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Horat1us\Environment\MissingEnvironmentException
-     * @expectedExceptionMessage Missing environment key GOOGLE_AUTOCOMPLETE_URL
-     */
     public function testNotExistUrl(): void
     {
         putenv('GOOGLE_AUTOCOMPLETE_URL');
 
-        $this->fakeEnvironmentConfig->getUrl();
+        $this->assertEquals(
+            ConfigInterface::URL,
+            $this->fakeEnvironmentConfig->getUrl()
+        );
     }
 }
