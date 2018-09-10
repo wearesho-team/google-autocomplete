@@ -68,4 +68,15 @@ class SearchQueryTest extends TestCase
             $this->fakeSearchQuery->getCity()
         );
     }
+
+    public function testNullCity(): void
+    {
+        $this->fakeSearchQuery = new SearchQuery(
+            static::INPUT,
+            Enums\AddressPart::CITY(),
+            Enums\SearchLanguage::RU(),
+            null
+        );
+        $this->assertNull($this->fakeSearchQuery->getCity());
+    }
 }
