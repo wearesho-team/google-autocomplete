@@ -9,6 +9,7 @@ namespace Wearesho\GoogleAutocomplete;
 interface ConfigInterface
 {
     public const UKRAINE = 'ua';
+    public const URL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
 
     public function getUrl(): string;
 

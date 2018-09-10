@@ -24,7 +24,7 @@ Or use [Environment Config](./src/EnvironmentConfig.php) to load variables from 
 
 |             Variable            | Required |               Description               |
 |:-------------------------------:|:--------:|:---------------------------------------:|
-| GOOGLE_SERVICE_AUTOCOMPLETE_URL | yes      | url for google-autocomplete-api service |
+| GOOGLE_SERVICE_AUTOCOMPLETE_URL | no      | url for google-autocomplete-api service |
 | GOOGLE_SERVICE_AUTOCOMPLETE_KEY | yes      | your private key                        |
 
 ```php
