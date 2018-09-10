@@ -57,7 +57,9 @@ class Service implements ServiceInterface
         $response = $this->client->request('GET', $this->config->getUrl(), [
             GuzzleHttp\RequestOptions::QUERY => [
                 static::INPUT => $query->getInput(),
-                static::TYPE => $queryType->getValue(),
+                static::TYPE => $queryType->equals(Enums\AddressPart::CITY())
+                    ? static::CITIES
+                    : static::ADDRESS,
                 static::COMPONENTS => static::COUNTRY . ConfigInterface::UKRAINE,
                 static::LANGUAGE => $query->getLanguage()->getValue(),
                 static::KEY => $this->config->getKey(),
@@ -163,7 +165,7 @@ class Service implements ServiceInterface
 
                     similar_text($city, $term[static::TERM_VALUE], $percentage);
 
-                    if ((float)$percentage >= static::MIN_SIMILARITY_PERCENTAGE) {
+                    if ($percentage >= static::MIN_SIMILARITY_PERCENTAGE) {
                         $locations->append(new Location($prediction[static::DESCRIPTION]));
 
                         continue;
@@ -171,7 +173,7 @@ class Service implements ServiceInterface
                 }
             }
 
-            if (empty($locations)) {
+            if (!$locations->count()) {
                 return $this->fetchStreets($predictions);
             }
         } else {
