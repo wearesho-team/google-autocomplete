@@ -185,58 +185,9 @@ class Service implements ServiceInterface
                 }
             }
 
-            $this->excludeDuplicatesResults($locations);
+            $locations->excludeDuplicates();
         }
 
         return $locations;
-    }
-
-    private function excludeDuplicatesResults(LocationCollection &$results): void
-    {
-        $terms = [];
-        $percentages = [];
-        $duplicatesIndexes = [];
-
-        if ($results->count() < 2) {
-            return;
-        }
-
-        foreach ($results as $result) {
-            $terms[] = explode(' ', $result);
-        }
-
-        foreach ($terms as $i => $words) {
-            foreach ($words as $k => $word) {
-                foreach ($terms as $j => $comparedWords) {
-                    if ($i !== $j) {
-                        foreach ($comparedWords as $comparedWord) {
-                            similar_text($word, $comparedWord, $percent);
-
-                            if ((int)$percent === static::FULL_SIMILARITY_PERCENTAGE) {
-                                $percentages[$k] = static::FULL_SIMILARITY_PERCENTAGE;
-
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                foreach ($percentages as $percent) {
-                    if ((int)$percent !== static::FULL_SIMILARITY_PERCENTAGE) {
-                        $percentages = [];
-
-                        break;
-                    }
-                }
-            }
-
-            $duplicatesIndexes[] = $i;
-        }
-
-        var_dump($duplicatesIndexes);
-
-        foreach ($duplicatesIndexes as $index) {
-            $results->offsetUnset($index);
-        }
     }
 }

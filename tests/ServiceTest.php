@@ -225,12 +225,7 @@ class ServiceTest extends TestCase
         ));
 
         $this->assertArraySubset(
-            [
-                'Сумская улица, Кременчуг, Полтавская область, Украина',
-                'улица Сумская, Харьков, Харьковская область, Украина',
-                'Сумская улица, Мерефа, Харьковская область, Украина',
-                'Сумская улица, Черновцы, Черновицкая область, Украина',
-            ],
+            ['Сумская улица',],
             $streets->jsonSerialize()
         );
 
@@ -249,26 +244,6 @@ class ServiceTest extends TestCase
             ['улица Сумская',],
             $streets->jsonSerialize()
         );
-    }
-
-    /**
-     * @
-     */
-    protected function testSameStreets(): void
-    {
-        $this->mock->append(
-            $this->mockGoogleAutocompleteResponse('Mocks/cities.json'),
-            $this->mockGoogleAutocompleteResponse('Mocks/streets.json')
-        );
-
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $streets = $this->fakeService->load(new SearchQuery(
-            'Сумская',
-            Enums\AddressPart::STREET(),
-            Enums\SearchLanguage::RU()
-        ));
-
-
     }
 
     protected function mockGoogleAutocompleteResponse(

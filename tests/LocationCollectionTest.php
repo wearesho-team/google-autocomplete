@@ -2,10 +2,10 @@
 
 namespace Wearesho\GoogleAutocomplete\Tests;
 
+use PHPUnit\Framework\TestCase;
+
 use Wearesho\GoogleAutocomplete\Location;
 use Wearesho\GoogleAutocomplete\LocationCollection;
-
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class LocationCollectionTest
@@ -36,7 +36,7 @@ class LocationCollectionTest extends TestCase
         $this->fakeLocationCollection->append(new \Exception());
     }
 
-    public function testValues(): void
+    public function testUpdateIndexes(): void
     {
         $this->fakeLocationCollection->append(new Location(static::VALUE));
         $this->fakeLocationCollection->append(new Location(static::VALUE));
@@ -51,7 +51,7 @@ class LocationCollectionTest extends TestCase
         $this->assertArrayNotHasKey(1, (array)$this->fakeLocationCollection);
         $this->assertArrayHasKey(2, (array)$this->fakeLocationCollection);
 
-        $this->fakeLocationCollection = $this->fakeLocationCollection->values();
+        $this->fakeLocationCollection->updateIndexes();
 
         $this->assertArrayHasKey(0, (array)$this->fakeLocationCollection);
         $this->assertArrayHasKey(1, (array)$this->fakeLocationCollection);

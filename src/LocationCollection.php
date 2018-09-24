@@ -20,9 +20,36 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         parent::__construct($elements, $flags, $iteratorClass);
     }
 
-    public function values(): LocationCollection
+    public function excludeDuplicates(): void
     {
-        return new static(array_values((array)$this));
+        if ($this->count() < 2) {
+            return;
+        }
+
+        $this->exchangeArray(array_map(
+            function (array $terms): Location {
+                return new Location(implode(' ', $terms));
+            },
+            [
+                call_user_func_array(
+                    'array_intersect',
+                    array_unique(
+                        array_map(
+                            function (Location $location): array {
+                                return explode(' ', $location->getValue());
+                            },
+                            (array)$this
+                        ),
+                        SORT_REGULAR
+                    )
+                )
+            ]
+        ));
+    }
+
+    public function updateIndexes(): void
+    {
+        $this->exchangeArray(array_values($this->getArrayCopy()));
     }
 
     public function append($value)
