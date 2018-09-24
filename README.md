@@ -55,6 +55,7 @@ $service = new \Wearesho\GoogleAutocomplete\Service(
 #### Session token
 
 A random string which identifies an autocomplete session for billing purposes for user
+If this parameter is omitted from an autocomplete request, the request is billed independently.
 
 *Recommended to use hash string*.
 
