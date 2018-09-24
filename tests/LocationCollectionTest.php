@@ -35,26 +35,4 @@ class LocationCollectionTest extends TestCase
     {
         $this->fakeLocationCollection->append(new \Exception());
     }
-
-    public function testUpdateIndexes(): void
-    {
-        $this->fakeLocationCollection->append(new Location(static::VALUE));
-        $this->fakeLocationCollection->append(new Location(static::VALUE));
-
-        $this->assertArrayHasKey(0, (array)$this->fakeLocationCollection);
-        $this->assertArrayHasKey(1, (array)$this->fakeLocationCollection);
-        $this->assertArrayHasKey(2, (array)$this->fakeLocationCollection);
-
-        $this->fakeLocationCollection->offsetUnset(1);
-
-        $this->assertArrayHasKey(0, (array)$this->fakeLocationCollection);
-        $this->assertArrayNotHasKey(1, (array)$this->fakeLocationCollection);
-        $this->assertArrayHasKey(2, (array)$this->fakeLocationCollection);
-
-        $this->fakeLocationCollection->updateIndexes();
-
-        $this->assertArrayHasKey(0, (array)$this->fakeLocationCollection);
-        $this->assertArrayHasKey(1, (array)$this->fakeLocationCollection);
-        $this->assertArrayNotHasKey(2, (array)$this->fakeLocationCollection);
-    }
 }

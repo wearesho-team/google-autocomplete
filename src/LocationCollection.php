@@ -47,11 +47,6 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         ));
     }
 
-    public function updateIndexes(): void
-    {
-        $this->exchangeArray(array_values($this->getArrayCopy()));
-    }
-
     public function append($value)
     {
         $this->validateType($value);
