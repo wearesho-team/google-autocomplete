@@ -4,6 +4,8 @@
 
 This library allows you to search Ukrainian cities/streets using google api.
 
+[Changelog](./CHANGELOG.md)
+
 ## Installation
 
 ```bash
