@@ -12,7 +12,8 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         array $elements = [],
         int $flags = 0,
         string $iteratorClass = \ArrayIterator::class
-    ) {
+    )
+    {
         foreach ($elements as $element) {
             $this->validateType($element);
         }
@@ -34,12 +35,9 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
                 call_user_func_array(
                     'array_intersect',
                     array_unique(
-                        array_map(
-                            function (Location $location): array {
-                                return explode(' ', $location->getValue());
-                            },
-                            (array)$this
-                        ),
+                        array_map(function (Location $location): array {
+                            return explode(' ', $location->getValue());
+                        }, (array)$this),
                         SORT_REGULAR
                     )
                 )
