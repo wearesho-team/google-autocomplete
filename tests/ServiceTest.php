@@ -246,8 +246,35 @@ class ServiceTest extends TestCase
         ));
 
         $this->assertArraySubset(
-            ['улица Сумская, Харьков, Харьковская область, Украина',],
+            ['улица Сумская',],
             $streets->jsonSerialize()
         );
+    }
+
+    /**
+     * @
+     */
+    protected function testSameStreets(): void
+    {
+        $this->mock->append(
+            $this->mockGoogleAutocompleteResponse('Mocks/cities.json'),
+            $this->mockGoogleAutocompleteResponse('Mocks/streets.json')
+        );
+
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $streets = $this->fakeService->load(new SearchQuery(
+            'Сумская',
+            Enums\AddressPart::STREET(),
+            Enums\SearchLanguage::RU()
+        ));
+
+
+    }
+
+    protected function mockGoogleAutocompleteResponse(
+        string $path = null,
+        array $headers = []
+    ): GuzzleHttp\Psr7\Response {
+        return new GuzzleHttp\Psr7\Response(200, $headers, file_get_contents($path, true));
     }
 }

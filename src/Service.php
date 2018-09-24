@@ -166,7 +166,7 @@ class Service implements ServiceInterface
                     similar_text($city, $term[static::TERM_VALUE], $percentage);
 
                     if ($percentage >= static::MIN_SIMILARITY_PERCENTAGE) {
-                        $locations->append(new Location($prediction[static::DESCRIPTION]));
+                        $locations->append(new Location($prediction[static::STRUCTURED_FORMATTING][static::MAIN_TEXT]));
 
                         continue;
                     }
@@ -180,7 +180,7 @@ class Service implements ServiceInterface
             /** @var array $prediction */
             foreach ($predictions as $prediction) {
                 if ($this->checkDescriptionExist($prediction)) {
-                    $locations->append(new Location($prediction[static::DESCRIPTION]));
+                    $locations->append(new Location($prediction[static::STRUCTURED_FORMATTING][static::MAIN_TEXT]));
                 }
             }
         }
