@@ -184,9 +184,9 @@ class ServiceTest extends TestCase
         ));
         $this->assertNotEmpty($data);
         $this->assertCount(1, $data);
-        $this->assertEquals(static::DESCRIPTION, $data->offsetGet(0)->getValue());
+        $this->assertEquals(static::MAIN_TEXT, $data->offsetGet(0)->getValue());
         $this->assertArraySubset(
-            [static::DESCRIPTION,],
+            [static::MAIN_TEXT,],
             $data->jsonSerialize()
         );
     }

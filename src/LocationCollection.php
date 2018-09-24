@@ -20,6 +20,11 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         parent::__construct($elements, $flags, $iteratorClass);
     }
 
+    public function values(): LocationCollection
+    {
+        return new static(array_values((array)$this));
+    }
+
     public function append($value)
     {
         $this->validateType($value);
