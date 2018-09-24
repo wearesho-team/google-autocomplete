@@ -194,9 +194,9 @@ class ServiceTest extends TestCase
     public function testStreetsInCity(): void
     {
         $this->mock->append(
-            new GuzzleHttp\Psr7\Response(200, [], file_get_contents('Mocks/cities.json', true)),
-            new GuzzleHttp\Psr7\Response(200, [], file_get_contents('Mocks/streets.json', true)),
-            new GuzzleHttp\Psr7\Response(200, [], file_get_contents('Mocks/streets.json', true))
+            $this->mockResponseFromMockFile('Mocks/cities.json'),
+            $this->mockResponseFromMockFile('Mocks/streets.json'),
+            $this->mockResponseFromMockFile('Mocks/streets.json')
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
@@ -246,10 +246,12 @@ class ServiceTest extends TestCase
         );
     }
 
-    protected function mockGoogleAutocompleteResponse(
-        string $path = null,
-        array $headers = []
-    ): GuzzleHttp\Psr7\Response {
-        return new GuzzleHttp\Psr7\Response(200, $headers, file_get_contents($path, true));
+    protected function mockResponseFromMockFile(string $path = null, array $headers = []): GuzzleHttp\Psr7\Response
+    {
+        return new GuzzleHttp\Psr7\Response(
+            200,
+            $headers,
+            file_get_contents($path, true)
+        );
     }
 }
