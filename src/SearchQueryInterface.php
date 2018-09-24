@@ -17,4 +17,6 @@ interface SearchQueryInterface
     public function getType(): Enums\AddressPart;
 
     public function getCity(): ?string;
+
+    public function getSessionToken(): string;
 }

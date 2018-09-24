@@ -20,6 +20,7 @@ use Wearesho\GoogleAutocomplete\Service;
  */
 class ServiceTest extends TestCase
 {
+    protected const SESSION_TOKEN = 'session_token';
     protected const URL = 'https://google.com';
     protected const KEY = 'testKey';
     protected const INPUT = 'testInput';
@@ -49,7 +50,7 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * @expectedException  \Wearesho\GoogleAutocomplete\Exceptions\InvalidResponse
+     * @expectedException \Wearesho\GoogleAutocomplete\Exceptions\InvalidResponse
      * @expectedExceptionMessage Response contain invalid data: invalid json
      */
     public function testInvalidResponse(): void
@@ -59,11 +60,7 @@ class ServiceTest extends TestCase
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $this->fakeService->load($this->getCitySearchQuery());
     }
 
     public function testZeroResults(): void
@@ -75,11 +72,8 @@ class ServiceTest extends TestCase
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $data = $this->fakeService->load($this->getCitySearchQuery());
+
         $this->assertEmpty($data);
     }
 
@@ -96,11 +90,7 @@ class ServiceTest extends TestCase
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $this->fakeService->load($this->getCitySearchQuery());
     }
 
     public function testEmptyPredictions(): void
@@ -114,11 +104,8 @@ class ServiceTest extends TestCase
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $data = $this->fakeService->load($this->getCitySearchQuery());
+
         $this->assertEmpty($data);
     }
 
@@ -142,11 +129,7 @@ class ServiceTest extends TestCase
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $data = $this->fakeService->load($this->getCitySearchQuery());
         $this->assertNotEmpty($data);
         $this->assertCount(1, $data);
         $this->assertEquals(static::MAIN_TEXT, $data->offsetGet(0)->getValue());
@@ -177,11 +160,7 @@ class ServiceTest extends TestCase
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::STREET(),
-            Enums\SearchLanguage::RU()
-        ));
+        $data = $this->fakeService->load($this->getStreetSearchQuery());
         $this->assertNotEmpty($data);
         $this->assertCount(1, $data);
         $this->assertEquals(static::DESCRIPTION, $data->offsetGet(0)->getValue());
@@ -200,11 +179,7 @@ class ServiceTest extends TestCase
         );
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $cities = $this->fakeService->load(new SearchQuery(
-            'Харьков',
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $cities = $this->fakeService->load($this->getCitySearchQuery('Харьков'));
 
         $this->assertArraySubset(
             [
@@ -217,12 +192,9 @@ class ServiceTest extends TestCase
             $cities->jsonSerialize()
         );
 
+        $street = 'Сумская';
         /** @noinspection PhpUnhandledExceptionInspection */
-        $streets = $this->fakeService->load(new SearchQuery(
-            'Сумская',
-            Enums\AddressPart::STREET(),
-            Enums\SearchLanguage::RU()
-        ));
+        $streets = $this->fakeService->load($this->getStreetSearchQuery($street));
 
         $this->assertArraySubset(
             [
@@ -234,20 +206,35 @@ class ServiceTest extends TestCase
             $streets->jsonSerialize()
         );
 
-        /** @var Location $kharkov */
-        $kharkov = $cities->offsetGet(0);
+        /** @var Location $city */
+        $city = $cities->offsetGet(0);
 
         /** @noinspection PhpUnhandledExceptionInspection */
-        $streets = $this->fakeService->load(new SearchQuery(
-            'Сумская',
-            Enums\AddressPart::STREET(),
-            Enums\SearchLanguage::RU(),
-            $kharkov->getValue()
-        ));
+        $streets = $this->fakeService->load($this->getStreetSearchQuery($street, $city->getValue()));
 
         $this->assertArraySubset(
             ['улица Сумская, Харьков, Харьковская область, Украина',],
             $streets->jsonSerialize()
         );
+    }
+
+    protected function getCitySearchQuery(string $input = self::INPUT): SearchQuery
+    {
+        return $this->generateSearchQuery($input, Enums\AddressPart::CITY());
+    }
+
+    protected function getStreetSearchQuery(string $input = self::INPUT, string $city = null): SearchQuery
+    {
+        return $this->generateSearchQuery($input, Enums\AddressPart::STREET(), $city);
+    }
+
+    protected function generateSearchQuery(string $input, Enums\AddressPart $addressPart, string $city = null)
+    {
+        return new SearchQuery($this->getTestSessionToken(), $input, $addressPart, Enums\SearchLanguage::RU(), $city);
+    }
+
+    protected function getTestSessionToken(): string
+    {
+        return base64_encode(static::SESSION_TOKEN);
     }
 }

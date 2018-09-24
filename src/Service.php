@@ -12,6 +12,7 @@ use Wearesho\GoogleAutocomplete\Enums;
  */
 class Service implements ServiceInterface
 {
+    protected const SESSION_TOKEN = 'sessiontoken';
     protected const CITIES = '(cities)';
     protected const ADDRESS = 'address';
     protected const STATUS = 'status';
@@ -62,13 +63,13 @@ class Service implements ServiceInterface
                     : static::ADDRESS,
                 static::COMPONENTS => static::COUNTRY . ConfigInterface::UKRAINE,
                 static::LANGUAGE => $query->getLanguage()->getValue(),
+                static::SESSION_TOKEN => $query->getSessionToken(),
                 static::KEY => $this->config->getKey(),
             ],
         ]);
 
         $responseBody = $response->getBody();
         $data = json_decode($responseBody, true);
-        
         if (json_last_error() !== JSON_ERROR_NONE || !array_key_exists(static::STATUS, $data)) {
             throw new Exceptions\InvalidResponse($response);
         }
