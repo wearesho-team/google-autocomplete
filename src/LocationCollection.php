@@ -27,21 +27,57 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
             return;
         }
 
+        $explodedTerms = array_map(function (Location $location): array {
+            return explode(' ', $location->getValue());
+        }, (array)$this);
+
+        $explodedTerms = array_unique($explodedTerms, SORT_REGULAR);
+        $explodedTermsCount = count($explodedTerms);
+        $result = [];
+
+        $a = $this->super_unique($explodedTerms);
+
+        die;
+
+        for ($i = 0; $i < $explodedTermsCount; $i++) {
+            for ($j = $i + 1; $j < $explodedTermsCount; $j++) {
+                if ($j == $explodedTermsCount) {
+                    break;
+                }
+
+                var_dump(count(array_diff($explodedTerms[$i], $explodedTerms[$j])) === count($explodedTerms[$i]));
+
+                if (count(array_intersect($explodedTerms[$i], $explodedTerms[$j]))) {
+                    $result[] = $explodedTerms[$i];
+                }
+            }
+        }
+
+        var_dump($result);
+
+        var_dump(call_user_func_array(
+            'array_intersect',
+            array_unique(
+                array_map(function (Location $location): array {
+                    return explode(' ', $location->getValue());
+                }, (array)$this),
+                SORT_REGULAR
+            )
+        ));
+
         $this->exchangeArray(array_map(
             function (array $terms): Location {
                 return new Location(implode(' ', $terms));
             },
-            [
-                call_user_func_array(
-                    'array_intersect',
-                    array_unique(
-                        array_map(function (Location $location): array {
-                            return explode(' ', $location->getValue());
-                        }, (array)$this),
-                        SORT_REGULAR
-                    )
+            call_user_func_array(
+                'array_intersect',
+                array_unique(
+                    array_map(function (Location $location): array {
+                        return [explode(' ', $location->getValue())];
+                    }, (array)$this),
+                    SORT_REGULAR
                 )
-            ]
+            )
         ));
     }
 
