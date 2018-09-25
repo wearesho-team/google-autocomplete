@@ -12,7 +12,7 @@ use Wearesho\GoogleAutocomplete\Enums;
  */
 class Service implements ServiceInterface
 {
-    protected const SESSION_TOKEN = 'sessiontoken';
+    protected const SESSION_TOKEN = 'session_token';
     protected const CITIES = '(cities)';
     protected const ADDRESS = 'address';
     protected const STATUS = 'status';
