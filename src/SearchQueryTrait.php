@@ -11,6 +11,9 @@ use Wearesho\GoogleAutocomplete\Enums;
 trait SearchQueryTrait
 {
     /** @var string */
+    protected $sessionToken;
+
+    /** @var string */
     protected $input;
 
     /** @var Enums\AddressPart */
@@ -40,5 +43,10 @@ trait SearchQueryTrait
     public function getCity(): ?string
     {
         return $this->city;
+    }
+
+    public function getSessionToken(): string
+    {
+        return $this->sessionToken;
     }
 }

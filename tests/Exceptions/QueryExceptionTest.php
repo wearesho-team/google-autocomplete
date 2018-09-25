@@ -16,6 +16,7 @@ use Wearesho\GoogleAutocomplete\SearchQuery;
  */
 class QueryExceptionTest extends TestCase
 {
+    protected const SESSION_TOKEN = 'session_token';
     protected const INPUT = 'testInput';
     protected const CITY = 'testCity';
 
@@ -26,6 +27,7 @@ class QueryExceptionTest extends TestCase
     {
         $this->fakeQueryException = new QueryException(
             new SearchQuery(
+                base64_encode(static::SESSION_TOKEN),
                 static::INPUT,
                 Enums\AddressPart::CITY(),
                 Enums\SearchLanguage::RU(),
@@ -50,6 +52,7 @@ class QueryExceptionTest extends TestCase
     {
         $this->assertEquals(
             new SearchQuery(
+                base64_encode(static::SESSION_TOKEN),
                 static::INPUT,
                 Enums\AddressPart::CITY(),
                 Enums\SearchLanguage::RU(),

@@ -15,6 +15,7 @@ use Wearesho\GoogleAutocomplete\Enums;
  */
 class SearchQueryTest extends TestCase
 {
+    protected const SESSION_TOKEN = 'session_token';
     protected const INPUT = 'testInput';
     protected const CITY = 'testCity';
 
@@ -24,6 +25,7 @@ class SearchQueryTest extends TestCase
     protected function setUp(): void
     {
         $this->fakeSearchQuery = new SearchQuery(
+            base64_encode(static::SESSION_TOKEN),
             static::INPUT,
             Enums\AddressPart::CITY(),
             Enums\SearchLanguage::RU(),
@@ -72,11 +74,20 @@ class SearchQueryTest extends TestCase
     public function testNullCity(): void
     {
         $this->fakeSearchQuery = new SearchQuery(
+            base64_encode(static::SESSION_TOKEN),
             static::INPUT,
             Enums\AddressPart::CITY(),
             Enums\SearchLanguage::RU(),
             null
         );
         $this->assertNull($this->fakeSearchQuery->getCity());
+    }
+
+    public function testSessionToken(): void
+    {
+        $this->assertEquals(
+            'c2Vzc2lvbl90b2tlbg==',
+            $this->fakeSearchQuery->getSessionToken()
+        );
     }
 }

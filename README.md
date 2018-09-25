@@ -52,6 +52,20 @@ $service = new \Wearesho\GoogleAutocomplete\Service(
 
 ### Create search data entity
 
+#### Session token
+
+A random string which identifies an autocomplete session for billing purposes for user
+In google-docs sad if this parameter is omitted from an autocomplete request, the request is billed independently. 
+So this service is binding to use it.
+
+*Recommended to use hash string*.
+
+```php
+<?php
+
+$token = 'any_random_string';
+```
+
 #### Searching cities
 ```php
 <?php
@@ -59,6 +73,7 @@ $service = new \Wearesho\GoogleAutocomplete\Service(
 use Wearesho\GoogleAutocomplete;
 
 $searchQuery = new GoogleAutocomplete\SearchQuery(
+    $token,
     'Value from input',
     $addressType = GoogleAutocomplete\Enums\AddressPart::CITY(),
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
@@ -73,6 +88,7 @@ use Wearesho\GoogleAutocomplete;
 
 // all streets
 $searchQuery = new GoogleAutocomplete\SearchQuery(
+    $token,
     'Value from input',
     $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
@@ -80,6 +96,7 @@ $searchQuery = new GoogleAutocomplete\SearchQuery(
 
 // Safe searching streets in concrete city
 $searchQuery = new GoogleAutocomplete\SearchQuery(
+    $token,
     'Value from input',
     $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
