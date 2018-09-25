@@ -241,11 +241,11 @@ class ServiceTest extends TestCase
             $streets->jsonSerialize()
         );
 
-        /** @var Location $kharkov */
-        $kharkov = $cities->offsetGet(0);
+        /** @var Location $city */
+        $city = $cities->offsetGet(0);
 
         $streets = $this->fakeService
-            ->setParameters($this->getStreetSearchQuery('Сумская', $kharkov->getValue()))
+            ->setParameters($this->getStreetSearchQuery('Сумская', $city->getValue()))
             ->load()
             ->getResults();
 

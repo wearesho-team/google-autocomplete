@@ -52,16 +52,31 @@ $service = new \Wearesho\GoogleAutocomplete\Service(
 
 ### Create search data entity
 
+#### Session token
+
+A random string which identifies an autocomplete session for billing purposes for user
+In google-docs sad if this parameter is omitted from an autocomplete request, the request is billed independently. 
+So this service is binding to use it.
+
+*Recommended to use hash string*.
+
+```php
+<?php
+
+$token = 'any_random_string';
+```
+
 #### Searching cities
 ```php
 <?php
 
 use Wearesho\GoogleAutocomplete;
 
-$searchQuery = new GoogleAutocomplete\SearchQuery(
+$searchQuery = new GoogleAutocomplete\Queries\CitySearch(
+    $token,
     'Value from input',
-    $addressType = GoogleAutocomplete\Enums\AddressPart::CITY(),
-    $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
+    $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
+    GoogleAutocomplete\Enums\SearchMode::SHORT()
 );
 ```
 
@@ -71,19 +86,13 @@ $searchQuery = new GoogleAutocomplete\SearchQuery(
 
 use Wearesho\GoogleAutocomplete;
 
-// all streets
-$searchQuery = new GoogleAutocomplete\SearchQuery(
+$searchQuery = new GoogleAutocomplete\Queries\StreetSearch(
+    $token,
     'Value from input',
-    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
-    $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
-);
-
-// Safe searching streets in concrete city
-$searchQuery = new GoogleAutocomplete\SearchQuery(
-    'Value from input',
-    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
-    $city = 'city name'
+    $city = 'city name',
+    $type = 'avenue', // optional
+    GoogleAutocomplete\Enums\SearchMode::SHORT()
 );
 ```
 
@@ -93,9 +102,12 @@ $searchQuery = new GoogleAutocomplete\SearchQuery(
 <?php
 
 /** @var \Wearesho\GoogleAutocomplete\Service $service */
-/** @var \Wearesho\GoogleAutocomplete\SearchQueryInterface $searchQuery */
+/** @var \Wearesho\GoogleAutocomplete\Queries\Interfaces\SearchQueryInterface $searchQuery */
 
-$suggestions = $service->load($searchQuery);
+$service->setParameters($searchQuery); // Set parameters for service
+$service->load(); // invoke query
+$suggestions = $service->getResults(); // get collection object of locations
+
 $values = $suggestions->jsonSerialize();
 ```
 
