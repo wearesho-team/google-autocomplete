@@ -3,10 +3,9 @@
 namespace Wearesho\GoogleAutocomplete\Tests\Exceptions;
 
 use PHPUnit\Framework\TestCase;
-
 use Wearesho\GoogleAutocomplete\Enums;
 use Wearesho\GoogleAutocomplete\Exceptions\QueryException;
-use Wearesho\GoogleAutocomplete\SearchQuery;
+use Wearesho\GoogleAutocomplete\Queries\CitySearch;
 
 /**
  * Class QueryExceptionTest
@@ -16,6 +15,7 @@ use Wearesho\GoogleAutocomplete\SearchQuery;
  */
 class QueryExceptionTest extends TestCase
 {
+    protected const TOKEN = 'token';
     protected const INPUT = 'testInput';
     protected const CITY = 'testCity';
 
@@ -25,11 +25,11 @@ class QueryExceptionTest extends TestCase
     protected function setUp(): void
     {
         $this->fakeQueryException = new QueryException(
-            new SearchQuery(
+            new CitySearch(
+                static::TOKEN,
                 static::INPUT,
-                Enums\AddressPart::CITY(),
                 Enums\SearchLanguage::RU(),
-                static::CITY
+                Enums\SearchMode::SHORT()
             ),
             Enums\SearchStatus::INVALID_REQUEST()
         );
@@ -49,11 +49,11 @@ class QueryExceptionTest extends TestCase
     public function testGetQuery(): void
     {
         $this->assertEquals(
-            new SearchQuery(
+            new CitySearch(
+                static::TOKEN,
                 static::INPUT,
-                Enums\AddressPart::CITY(),
                 Enums\SearchLanguage::RU(),
-                static::CITY
+                Enums\SearchMode::SHORT()
             ),
             $this->fakeQueryException->getQuery()
         );

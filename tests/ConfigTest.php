@@ -3,7 +3,6 @@
 namespace Wearesho\GoogleAutocomplete\Tests;
 
 use PHPUnit\Framework\TestCase;
-
 use Wearesho\GoogleAutocomplete\Config;
 
 /**

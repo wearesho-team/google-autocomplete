@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Wearesho\GoogleAutocomplete\Config;
 use Wearesho\GoogleAutocomplete\Enums;
 use Wearesho\GoogleAutocomplete\Location;
-use Wearesho\GoogleAutocomplete\SearchQuery;
+use Wearesho\GoogleAutocomplete\Queries;
 use Wearesho\GoogleAutocomplete\Service;
 
 /**
@@ -20,6 +20,7 @@ use Wearesho\GoogleAutocomplete\Service;
  */
 class ServiceTest extends TestCase
 {
+    protected const TOKEN = 'session_token';
     protected const URL = 'https://google.com';
     protected const KEY = 'testKey';
     protected const INPUT = 'testInput';
@@ -49,6 +50,33 @@ class ServiceTest extends TestCase
     }
 
     /**
+     * @expectedException  \Wearesho\GoogleAutocomplete\Exceptions\QueryException
+     * @expectedExceptionMessage Search failed with status [QUERY_NOT_SET]
+     */
+    public function testLoadWithEmptyQuery(): void
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->fakeService->load();
+    }
+
+    /**
+     * @expectedException \Wearesho\GoogleAutocomplete\Exceptions\InvalidQueryType
+     * @expectedExceptionMessage Invalid query type
+     */
+    public function testInvalidQueryType(): void
+    {
+        $query = new class(
+            'token',
+            'input',
+            Enums\SearchLanguage::RU()
+        ) extends Queries\SearchQuery
+        {
+        };
+
+        $this->fakeService->setParameters($query)->load();
+    }
+
+    /**
      * @expectedException  \Wearesho\GoogleAutocomplete\Exceptions\InvalidResponse
      * @expectedExceptionMessage Response contain invalid data: invalid json
      */
@@ -58,29 +86,25 @@ class ServiceTest extends TestCase
             new GuzzleHttp\Psr7\Response(200, [], 'invalid json')
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $this->fakeService
+            ->setParameters($this->getCitySearchQuery())
+            ->load();
     }
 
     public function testZeroResults(): void
     {
         $this->mock->append(
             new GuzzleHttp\Psr7\Response(200, [], json_encode([
-                'status' => Enums\SearchStatus::ZERO_RESULTS()->getValue(),
+                'status' => Enums\SearchStatus::ZERO_RESULTS,
             ]))
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
-        $this->assertEmpty($data);
+        $suggestions = $this->fakeService
+            ->setParameters($this->getCitySearchQuery())
+            ->load()
+            ->getResults();
+
+        $this->assertEmpty($suggestions);
     }
 
     /**
@@ -95,12 +119,9 @@ class ServiceTest extends TestCase
             ]))
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $this->fakeService
+            ->setParameters($this->getCitySearchQuery())
+            ->load();
     }
 
     public function testEmptyPredictions(): void
@@ -113,13 +134,12 @@ class ServiceTest extends TestCase
             new GuzzleHttp\Psr7\Response(200, [], $body)
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
-        $this->assertEmpty($data);
+        $suggestions = $this->fakeService
+            ->setParameters($this->getCitySearchQuery())
+            ->load()
+            ->getResults();
+
+        $this->assertEmpty($suggestions);
     }
 
     public function testCities(): void
@@ -141,18 +161,16 @@ class ServiceTest extends TestCase
             new GuzzleHttp\Psr7\Response(200, [], $body)
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
-        $this->assertNotEmpty($data);
-        $this->assertCount(1, $data);
-        $this->assertEquals(static::MAIN_TEXT, $data->offsetGet(0)->getValue());
+        $suggestions = $this->fakeService
+            ->setParameters($this->getCitySearchQuery())
+            ->load()
+            ->getResults();
+        $this->assertNotEmpty($suggestions);
+        $this->assertCount(1, $suggestions);
+        $this->assertEquals(static::MAIN_TEXT, $suggestions->offsetGet(0)->getValue());
         $this->assertArraySubset(
             [static::MAIN_TEXT,],
-            $data->jsonSerialize()
+            $suggestions->jsonSerialize()
         );
     }
 
@@ -176,18 +194,16 @@ class ServiceTest extends TestCase
             ]))
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $data = $this->fakeService->load(new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::STREET(),
-            Enums\SearchLanguage::RU()
-        ));
-        $this->assertNotEmpty($data);
-        $this->assertCount(1, $data);
-        $this->assertEquals(static::MAIN_TEXT, $data->offsetGet(0)->getValue());
+        $suggestions = $this->fakeService
+            ->setParameters($this->getStreetSearchQuery())
+            ->load()
+            ->getResults();
+        $this->assertNotEmpty($suggestions);
+        $this->assertCount(1, $suggestions);
+        $this->assertEquals(static::MAIN_TEXT, $suggestions->offsetGet(0)->getValue());
         $this->assertArraySubset(
             [static::MAIN_TEXT,],
-            $data->jsonSerialize()
+            $suggestions->jsonSerialize()
         );
     }
 
@@ -199,12 +215,10 @@ class ServiceTest extends TestCase
             $this->mockResponseFromMockFile('Mocks/streets.json')
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $cities = $this->fakeService->load(new SearchQuery(
-            'Харьков',
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU()
-        ));
+        $cities = $this->fakeService
+            ->setParameters($this->getCitySearchQuery('Харьков'))
+            ->load()
+            ->getResults();
 
         $this->assertArraySubset(
             [
@@ -217,12 +231,10 @@ class ServiceTest extends TestCase
             $cities->jsonSerialize()
         );
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $streets = $this->fakeService->load(new SearchQuery(
-            'Сумская',
-            Enums\AddressPart::STREET(),
-            Enums\SearchLanguage::RU()
-        ));
+        $streets = $this->fakeService
+            ->setParameters($this->getStreetSearchQuery('Сумская'))
+            ->load()
+            ->getResults();
 
         $this->assertArraySubset(
             ['Сумская улица',],
@@ -232,13 +244,10 @@ class ServiceTest extends TestCase
         /** @var Location $kharkov */
         $kharkov = $cities->offsetGet(0);
 
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $streets = $this->fakeService->load(new SearchQuery(
-            'Сумская',
-            Enums\AddressPart::STREET(),
-            Enums\SearchLanguage::RU(),
-            $kharkov->getValue()
-        ));
+        $streets = $this->fakeService
+            ->setParameters($this->getStreetSearchQuery('Сумская', $kharkov->getValue()))
+            ->load()
+            ->getResults();
 
         $this->assertArraySubset(
             ['улица Сумская',],
@@ -252,6 +261,33 @@ class ServiceTest extends TestCase
             200,
             $headers,
             file_get_contents($path, true)
+        );
+    }
+
+    protected function getTestSessionToken(): string
+    {
+        return base64_encode(static::TOKEN);
+    }
+
+    protected function getCitySearchQuery(string $input = self::INPUT): Queries\CitySearch
+    {
+        return new Queries\CitySearch(
+            $this->getTestSessionToken(),
+            $input,
+            Enums\SearchLanguage::RU(),
+            Enums\SearchMode::SHORT()
+        );
+    }
+
+    protected function getStreetSearchQuery(string $input = self::INPUT, string $city = null): Queries\StreetSearch
+    {
+        return new Queries\StreetSearch(
+            $this->getTestSessionToken(),
+            $input,
+            Enums\SearchLanguage::RU(),
+            $city,
+            null,
+            Enums\SearchMode::SHORT()
         );
     }
 }

@@ -3,7 +3,7 @@
 namespace Wearesho\GoogleAutocomplete\Exceptions;
 
 use Wearesho\GoogleAutocomplete\Enums\SearchStatus;
-use Wearesho\GoogleAutocomplete\SearchQueryInterface;
+use Wearesho\GoogleAutocomplete\Queries\Interfaces\SearchQueryInterface;
 
 /**
  * Class RequestException
@@ -11,14 +11,14 @@ use Wearesho\GoogleAutocomplete\SearchQueryInterface;
  */
 class QueryException extends \Exception
 {
-    /** @var SearchQueryInterface */
+    /** @var SearchQueryInterface|null */
     protected $query;
 
     /** @var SearchStatus */
     protected $status;
 
     public function __construct(
-        SearchQueryInterface $query,
+        ?SearchQueryInterface $query,
         SearchStatus $status,
         int $code = 0,
         \Throwable $previous = null
@@ -29,7 +29,7 @@ class QueryException extends \Exception
         parent::__construct("Search failed with status [{$status->getValue()}]", $code, $previous);
     }
 
-    public function getQuery(): SearchQueryInterface
+    public function getQuery(): ?SearchQueryInterface
     {
         return $this->query;
     }

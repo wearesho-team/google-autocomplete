@@ -3,9 +3,7 @@
 namespace Wearesho\GoogleAutocomplete\Tests\Exceptions;
 
 use GuzzleHttp\Psr7\Response;
-
 use PHPUnit\Framework\TestCase;
-
 use Wearesho\GoogleAutocomplete\Exceptions\InvalidResponse;
 
 /**

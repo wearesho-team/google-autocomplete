@@ -13,5 +13,10 @@ interface ConfigInterface
 
     public function getUrl(): string;
 
+    /**
+     * Project key that set to you by Google Cloud
+     *
+     * @return string
+     */
     public function getKey(): string;
 }
