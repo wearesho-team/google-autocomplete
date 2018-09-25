@@ -31,54 +31,23 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
             return explode(' ', $location->getValue());
         }, (array)$this);
 
-        $explodedTerms = array_unique($explodedTerms, SORT_REGULAR);
         $explodedTermsCount = count($explodedTerms);
         $result = [];
 
-        $a = $this->super_unique($explodedTerms);
-
-        die;
-
-        for ($i = 0; $i < $explodedTermsCount; $i++) {
+        for ($i = 0; $i < $explodedTermsCount - 1; $i++) {
             for ($j = $i + 1; $j < $explodedTermsCount; $j++) {
-                if ($j == $explodedTermsCount) {
+                if (array_count_values($explodedTerms[$i]) == array_count_values($explodedTerms[$j])) {
+                    unset($explodedTerms[$i]);
                     break;
-                }
-
-                var_dump(count(array_diff($explodedTerms[$i], $explodedTerms[$j])) === count($explodedTerms[$i]));
-
-                if (count(array_intersect($explodedTerms[$i], $explodedTerms[$j]))) {
-                    $result[] = $explodedTerms[$i];
                 }
             }
         }
 
-        var_dump($result);
+        foreach ($explodedTerms as $term) {
+            $result[] = new Location(implode(' ', $term));
+        }
 
-        var_dump(call_user_func_array(
-            'array_intersect',
-            array_unique(
-                array_map(function (Location $location): array {
-                    return explode(' ', $location->getValue());
-                }, (array)$this),
-                SORT_REGULAR
-            )
-        ));
-
-        $this->exchangeArray(array_map(
-            function (array $terms): Location {
-                return new Location(implode(' ', $terms));
-            },
-            call_user_func_array(
-                'array_intersect',
-                array_unique(
-                    array_map(function (Location $location): array {
-                        return [explode(' ', $location->getValue())];
-                    }, (array)$this),
-                    SORT_REGULAR
-                )
-            )
-        ));
+        $this->exchangeArray($result);
     }
 
     public function append($value)
