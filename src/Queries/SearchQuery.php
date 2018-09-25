@@ -21,6 +21,6 @@ abstract class SearchQuery implements Interfaces\SearchQueryInterface
         $this->token = $token;
         $this->input = $input;
         $this->language = $searchLanguage;
-        $this->mode = $mode;
+        $this->mode = $mode ?? Enums\SearchMode::FULL();
     }
 }

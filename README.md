@@ -76,7 +76,7 @@ $searchQuery = new GoogleAutocomplete\Queries\CitySearch(
     $token,
     'Value from input',
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
-    GoogleAutocomplete\Enums\SearchMode::SHORT()
+    GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
 );
 ```
 
@@ -89,10 +89,10 @@ use Wearesho\GoogleAutocomplete;
 $searchQuery = new GoogleAutocomplete\Queries\StreetSearch(
     $token,
     'Value from input',
-    $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
+    $language = GoogleAutocomplete\Enums\SearchLanguage::RU(), // optional
     $city = 'city name',
     $type = 'avenue', // optional
-    GoogleAutocomplete\Enums\SearchMode::SHORT()
+    GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
 );
 ```
 
