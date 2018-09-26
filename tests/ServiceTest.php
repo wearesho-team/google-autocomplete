@@ -162,6 +162,15 @@ class ServiceTest extends TestCase
             [static::MAIN_TEXT,],
             $data->jsonSerialize()
         );
+
+        $this->assertCount(1, $this->container);
+        /** @var GuzzleHttp\Psr7\Request $request */
+        $request = $this->container[0]['request'];
+
+        $query = $request->getUri()->getQuery();
+        $searchQuery = http_build_query(['components' => 'country:testcountry']);
+
+        $this->assertTrue(mb_strpos($query, $searchQuery) !== false);
     }
 
     public function testStreets(): void
