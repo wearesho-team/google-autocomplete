@@ -57,22 +57,17 @@ class Service implements ServiceInterface
         return $this->locations;
     }
 
-    public function setParameters(Queries\Interfaces\SearchQueryInterface $query): ServiceInterface
-    {
-        $this->query = $query;
-
-        return $this;
-    }
-
     /**
+     * @param Queries\Interfaces\SearchQueryInterface $query
+     *
      * @return ServiceInterface
      * @throws Exceptions\InvalidResponse
      * @throws Exceptions\QueryException
      * @throws GuzzleHttp\Exception\GuzzleException
      */
-    public function load(): ServiceInterface
+    public function load(Queries\Interfaces\SearchQueryInterface $query): ServiceInterface
     {
-        $this->validateQuery();
+        $this->query = $query;
 
         $parameters = [
             static::INPUT => trim($this->query->getInput()),
@@ -125,27 +120,9 @@ class Service implements ServiceInterface
         }
     }
 
-    /**
-     * @throws Exceptions\QueryException
-     */
-    protected function validateQuery(): void
-    {
-        if (!$this->query) {
-            throw new Exceptions\QueryException($this->query, Enums\SearchStatus::QUERY_NOT_SET());
-        }
-    }
-
-    /**
-     * @param array $predictions
-     *
-     * @return LocationCollection
-     * @throws Exceptions\QueryException
-     */
     protected function fetchResults(array $predictions): LocationCollection
     {
         $locations = new LocationCollection();
-
-        $this->validateQuery();
 
         if ($this->query instanceof Queries\Interfaces\CitySearchInterface) {
             foreach ($predictions as $prediction) {

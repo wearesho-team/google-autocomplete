@@ -50,16 +50,6 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * @expectedException  \Wearesho\GoogleAutocomplete\Exceptions\QueryException
-     * @expectedExceptionMessage Search failed with status [QUERY_NOT_SET]
-     */
-    public function testLoadWithEmptyQuery(): void
-    {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        $this->fakeService->load();
-    }
-
-    /**
      * @expectedException \Wearesho\GoogleAutocomplete\Exceptions\InvalidQueryType
      * @expectedExceptionMessage Invalid query type
      */
@@ -73,7 +63,8 @@ class ServiceTest extends TestCase
         {
         };
 
-        $this->fakeService->setParameters($query)->load();
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->fakeService->load($query);
     }
 
     /**
@@ -86,9 +77,8 @@ class ServiceTest extends TestCase
             new GuzzleHttp\Psr7\Response(200, [], 'invalid json')
         );
 
-        $this->fakeService
-            ->setParameters($this->getCitySearchQuery())
-            ->load();
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->fakeService->load($this->getCitySearchQuery());
     }
 
     public function testZeroResults(): void
@@ -99,9 +89,9 @@ class ServiceTest extends TestCase
             ]))
         );
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $suggestions = $this->fakeService
-            ->setParameters($this->getCitySearchQuery())
-            ->load()
+            ->load($this->getCitySearchQuery())
             ->getResults();
 
         $this->assertEmpty($suggestions);
@@ -119,9 +109,8 @@ class ServiceTest extends TestCase
             ]))
         );
 
-        $this->fakeService
-            ->setParameters($this->getCitySearchQuery())
-            ->load();
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->fakeService->load($this->getCitySearchQuery());
     }
 
     public function testEmptyPredictions(): void
@@ -134,9 +123,9 @@ class ServiceTest extends TestCase
             new GuzzleHttp\Psr7\Response(200, [], $body)
         );
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $suggestions = $this->fakeService
-            ->setParameters($this->getCitySearchQuery())
-            ->load()
+            ->load($this->getCitySearchQuery())
             ->getResults();
 
         $this->assertEmpty($suggestions);
@@ -161,9 +150,9 @@ class ServiceTest extends TestCase
             new GuzzleHttp\Psr7\Response(200, [], $body)
         );
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $suggestions = $this->fakeService
-            ->setParameters($this->getCitySearchQuery())
-            ->load()
+            ->load($this->getCitySearchQuery())
             ->getResults();
         $this->assertNotEmpty($suggestions);
         $this->assertCount(1, $suggestions);
@@ -194,9 +183,9 @@ class ServiceTest extends TestCase
             ]))
         );
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $suggestions = $this->fakeService
-            ->setParameters($this->getStreetSearchQuery())
-            ->load()
+            ->load($this->getStreetSearchQuery())
             ->getResults();
         $this->assertNotEmpty($suggestions);
         $this->assertCount(1, $suggestions);
@@ -215,9 +204,9 @@ class ServiceTest extends TestCase
             $this->mockResponseFromMockFile('Mocks/streets.json')
         );
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $cities = $this->fakeService
-            ->setParameters($this->getCitySearchQuery('Харьков'))
-            ->load()
+            ->load($this->getCitySearchQuery('Харьков'))
             ->getResults();
 
         $this->assertArraySubset(
@@ -231,9 +220,9 @@ class ServiceTest extends TestCase
             $cities->jsonSerialize()
         );
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $streets = $this->fakeService
-            ->setParameters($this->getStreetSearchQuery('Сумская'))
-            ->load()
+            ->load($this->getStreetSearchQuery('Сумская'))
             ->getResults();
 
         $this->assertArraySubset(
@@ -244,9 +233,9 @@ class ServiceTest extends TestCase
         /** @var Location $city */
         $city = $cities->offsetGet(0);
 
+        /** @noinspection PhpUnhandledExceptionInspection */
         $streets = $this->fakeService
-            ->setParameters($this->getStreetSearchQuery('Сумская', $city->getValue()))
-            ->load()
+            ->load($this->getStreetSearchQuery('Сумская', $city->getValue()))
             ->getResults();
 
         $this->assertArraySubset(

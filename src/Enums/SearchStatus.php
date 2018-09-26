@@ -14,7 +14,6 @@ use MyCLabs\Enum\Enum;
  * @method static SearchStatus REQUEST_DENIED()
  * @method static SearchStatus INVALID_REQUEST()
  * @method static SearchStatus UNKNOWN_ERROR()
- * @method static SearchStatus QUERY_NOT_SET()
  */
 final class SearchStatus extends Enum
 {
@@ -24,5 +23,4 @@ final class SearchStatus extends Enum
     public const REQUEST_DENIED = 'REQUEST_DENIED';
     public const INVALID_REQUEST = 'INVALID_REQUEST';
     public const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
-    public const QUERY_NOT_SET = 'QUERY_NOT_SET';
 }
