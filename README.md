@@ -108,6 +108,11 @@ $service->setParameters($searchQuery); // Set parameters for service
 $service->load(); // invoke query
 $suggestions = $service->getResults(); // get collection object of locations
 
+// or use it fluent
+$suggestions = $service->setParameters($searchQuery)
+    ->load()
+    ->getResults();
+
 $values = $suggestions->jsonSerialize();
 ```
 
