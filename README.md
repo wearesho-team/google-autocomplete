@@ -96,6 +96,8 @@ $searchQuery = new GoogleAutocomplete\Queries\StreetSearch(
 );
 ```
 
+If you want to customize your queries use [Query Interfaces](./src/Queries/Interfaces)
+
 ### Receive suggestions
 
 ```php
