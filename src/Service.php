@@ -60,7 +60,7 @@ class Service implements ServiceInterface
                 static::TYPE => $queryType->equals(Enums\AddressPart::CITY())
                     ? static::CITIES
                     : static::ADDRESS,
-                static::COMPONENTS => static::COUNTRY . ConfigInterface::UKRAINE,
+                static::COMPONENTS => static::COUNTRY . mb_strtolower($this->config->getCountry()),
                 static::LANGUAGE => $query->getLanguage()->getValue(),
                 static::KEY => $this->config->getKey(),
             ],

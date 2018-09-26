@@ -17,6 +17,7 @@ class EnvironmentConfigTest extends TestCase
 {
     protected const URL = 'https://google.com';
     protected const KEY = 'testKey';
+    protected const COUNTRY = 'testCountry';
 
     /** @var EnvironmentConfig */
     protected $fakeEnvironmentConfig;
@@ -64,6 +65,26 @@ class EnvironmentConfigTest extends TestCase
         $this->assertEquals(
             ConfigInterface::URL,
             $this->fakeEnvironmentConfig->getUrl()
+        );
+    }
+
+    public function testExistCountry(): void
+    {
+        putenv('GOOGLE_AUTOCOMPLETE_COUNTRY=' . static::COUNTRY);
+
+        $this->assertEquals(
+            static::COUNTRY,
+            $this->fakeEnvironmentConfig->getCountry()
+        );
+    }
+
+    public function testNotExistCountry(): void
+    {
+        putenv('GOOGLE_AUTOCOMPLETE_COUNTRY');
+
+        $this->assertEquals(
+            ConfigInterface::UKRAINE,
+            $this->fakeEnvironmentConfig->getCountry()
         );
     }
 }

@@ -16,13 +16,14 @@ class ConfigTest extends TestCase
 {
     protected const URL = 'https://google.com/';
     protected const KEY = 'testKey';
+    protected const COUNTRY = 'testCountry';
 
     /** @var Config */
     protected $fakeConfig;
 
     protected function setUp(): void
     {
-        $this->fakeConfig = new Config(static::KEY, static::URL);
+        $this->fakeConfig = new Config(static::KEY, static::COUNTRY, static::URL);
     }
 
     public function testGetUrl(): void
@@ -38,6 +39,14 @@ class ConfigTest extends TestCase
         $this->assertEquals(
             static::KEY,
             $this->fakeConfig->getKey()
+        );
+    }
+
+    public function testGetCountry(): void
+    {
+        $this->assertEquals(
+            static::COUNTRY,
+            $this->fakeConfig->getCountry()
         );
     }
 }

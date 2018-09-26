@@ -24,4 +24,9 @@ class EnvironmentConfig extends Environment\Config implements ConfigInterface
     {
         return $this->getEnv('KEY');
     }
+
+    public function getCountry(): string
+    {
+        return $this->getEnv('COUNTRY', ConfigInterface::UKRAINE);
+    }
 }

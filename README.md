@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/wearesho-team/google-autocomplete.svg?branch=master)](https://travis-ci.org/wearesho-team/google-autocomplete)
 [![codecov](https://codecov.io/gh/wearesho-team/google-autocomplete/branch/master/graph/badge.svg)](https://codecov.io/gh/wearesho-team/google-autocomplete)
 
-This library allows you to search Ukrainian cities/streets using google api.
+This library allows you to search cities/streets of concrete country using google api.
 
 ## Installation
 
@@ -19,6 +19,7 @@ Create configuration
 
 $config = new \Wearesho\GoogleAutocomplete\Config(
     $apiKey = 'your personal api key',
+    $country = 'ua', // optional
     $requestUrl = 'https://google.com/' // optional
 );
 ```
@@ -26,8 +27,9 @@ $config = new \Wearesho\GoogleAutocomplete\Config(
 Or use [Environment Config](./src/EnvironmentConfig.php) to load variables from environment
 
 | Variable | Required | Default value | Description |
-|:-------------------------------:|:--------:|:------------------------------------------------------------:|:---------------------------------------:|
+|:-----------------------------------:|:--------:|:------------------------------------------------------------:|:---------------------------------------:|
 | GOOGLE_SERVICE_AUTOCOMPLETE_URL | no | https://maps.googleapis.com/maps/api/place/autocomplete/json | url for google-autocomplete-api service |
+| GOOGLE_SERVICE_AUTOCOMPLETE_COUNTRY | no | ua | ISO alpha-2 country code in lower case |
 | GOOGLE_SERVICE_AUTOCOMPLETE_KEY | yes |  | your private key |
 
 ```php
@@ -114,6 +116,43 @@ return [
     ],
 ];
 ```
+
+## Contributing
+
+To contribute you need to fork this repo and than create a pull request
+
+### Search language
+
+Add language code to [SearchLanguage.php](./src/Enums/SearchLanguage.php)
+
+```php
+<?php
+
+namespace Wearesho\GoogleAutocomplete\Enums;
+
+use MyCLabs\Enum\Enum;
+
+/**
+ * Interface SearchLanguage
+ * @package Wearesho\GoogleAutocomplete\Enums
+ *
+ * @method static static RU()
+ * @method static static UK()
+ *          
+ * @method static static YOUR_LANGUAGE_KEY()
+ */
+final class SearchLanguage extends Enum
+{
+    protected const RU = 'ru';
+    protected const UK = 'uk';
+    
+    protected const YOUR_LANGUAGE_KEY = 'language_code';
+}
+```
+
+### Frameworks configurations
+
+Add directory with name of needs framework to [source directory](./src) and create your Bootstrap.php file
 
 ## Authors
 

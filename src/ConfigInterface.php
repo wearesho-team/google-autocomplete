@@ -14,4 +14,6 @@ interface ConfigInterface
     public function getUrl(): string;
 
     public function getKey(): string;
+
+    public function getCountry(): string;
 }
