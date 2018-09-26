@@ -14,10 +14,17 @@ class Config implements ConfigInterface
     /** @var string */
     protected $key;
 
-    public function __construct(string $key, string $url = ConfigInterface::URL)
-    {
+    /** @var string */
+    protected $country;
+
+    public function __construct(
+        string $key,
+        string $country = ConfigInterface::UKRAINE,
+        string $url = ConfigInterface::URL
+    ) {
         $this->url = $url;
         $this->key = $key;
+        $this->country = $country;
     }
 
     public function getUrl(): string
@@ -28,5 +35,10 @@ class Config implements ConfigInterface
     public function getKey(): string
     {
         return $this->key;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
     }
 }
