@@ -73,7 +73,7 @@ class Service implements ServiceInterface
             static::INPUT => trim($this->query->getInput()),
             static::SESSION_TOKEN => $this->query->getToken(),
             static::LANGUAGE => $this->query->getLanguage()->getValue(),
-            static::COMPONENTS => static::COUNTRY . ConfigInterface::UKRAINE,
+            static::COMPONENTS => static::COUNTRY . mb_strtolower($this->config->getCountry()),
             static::KEY => $this->config->getKey(),
         ];
 
