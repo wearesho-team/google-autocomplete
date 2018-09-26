@@ -106,14 +106,11 @@ If you want to customize your queries use [Query Interfaces](./src/Queries/Inter
 /** @var \Wearesho\GoogleAutocomplete\Service $service */
 /** @var \Wearesho\GoogleAutocomplete\Queries\Interfaces\SearchQueryInterface $searchQuery */
 
-$service->setParameters($searchQuery); // Set parameters for service
-$service->load(); // invoke query
+$service->load($searchQuery); // invoke query
 $suggestions = $service->getResults(); // get collection object of locations
 
 // or use it fluent
-$suggestions = $service->setParameters($searchQuery)
-    ->load()
-    ->getResults();
+$suggestions = $service->load($searchQuery)->getResults();
 
 $values = $suggestions->jsonSerialize();
 ```
