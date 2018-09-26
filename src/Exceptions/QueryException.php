@@ -18,8 +18,8 @@ class QueryException extends \Exception
     protected $status;
 
     public function __construct(
-        ?SearchQueryInterface $query,
         SearchStatus $status,
+        SearchQueryInterface $query = null,
         int $code = 0,
         \Throwable $previous = null
     ) {

@@ -12,7 +12,8 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         array $elements = [],
         int $flags = 0,
         string $iteratorClass = \ArrayIterator::class
-    ) {
+    )
+    {
         foreach ($elements as $element) {
             $this->validateType($element);
         }
@@ -20,6 +21,15 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         parent::__construct($elements, $flags, $iteratorClass);
     }
 
+    /**
+     * Removes duplicates of location names if they have same names.
+     *
+     * The algorithm compares only words, not the whole line, and if there is a difference of at least one character,
+     * then the name is not considered duplicates
+     *
+     * @example ["street Main", "Main street"] => ["street Main"]
+     * @example ["street Main", "Main st."] => ["street Main", "Main st."]
+     */
     public function excludeDuplicates(): void
     {
         if ($this->count() < 2) {

@@ -25,13 +25,13 @@ class QueryExceptionTest extends TestCase
     protected function setUp(): void
     {
         $this->fakeQueryException = new QueryException(
+            Enums\SearchStatus::INVALID_REQUEST(),
             new CitySearch(
                 static::TOKEN,
                 static::INPUT,
                 Enums\SearchLanguage::RU(),
                 Enums\SearchMode::SHORT()
-            ),
-            Enums\SearchStatus::INVALID_REQUEST()
+            )
         );
     }
 

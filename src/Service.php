@@ -116,7 +116,7 @@ class Service implements ServiceInterface
     protected function validateStatus(Enums\SearchStatus $status): void
     {
         if (!$status->equals(Enums\SearchStatus::OK()) && !$status->equals(Enums\SearchStatus::ZERO_RESULTS())) {
-            throw new Exceptions\QueryException($this->query, $status);
+            throw new Exceptions\QueryException($status, $this->query);
         }
     }
 
