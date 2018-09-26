@@ -12,8 +12,7 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         array $elements = [],
         int $flags = 0,
         string $iteratorClass = \ArrayIterator::class
-    )
-    {
+    ) {
         foreach ($elements as $element) {
             $this->validateType($element);
         }
