@@ -76,7 +76,7 @@ $searchQuery = new GoogleAutocomplete\Queries\CitySearch(
     $token,
     'Value from input',
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
-    GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
+    $mode = GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
 );
 ```
 
@@ -92,7 +92,7 @@ $searchQuery = new GoogleAutocomplete\Queries\StreetSearch(
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
     $city = 'city name', // optional
     $type = 'avenue', // optional
-    GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
+    $mode = GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
 );
 ```
 
@@ -117,6 +117,35 @@ $suggestions = $service->setParameters($searchQuery)
 
 $values = $suggestions->jsonSerialize();
 ```
+
+### Search mode
+
+Service have [2 modes](./src/Enums/SearchMode.php) for searching results:
+
+```php
+<?php
+
+use Wearesho\GoogleAutocomplete\Enums\SearchMode;
+
+/**
+ * This mode provide service for returning short names of locations
+ * 
+ * @example "Paris"
+ *          "Kharkov"
+ */
+$mode = SearchMode::SHORT();
+
+/**
+ * This mode provide service for returning full names of locations
+ * 
+ * @example "Paris, France"
+ *          "Kharkov, Kharkiv Oblast, Ukraine"
+ */
+$mode = SearchMode::FULL();
+```
+
+This parameter is optional.
+By default set FULL() mode.
 
 ## Yii2 configuration
 
