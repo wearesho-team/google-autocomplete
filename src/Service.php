@@ -162,11 +162,9 @@ class Service implements ServiceInterface
                     }
                 }
             }
-
-            $locations->excludeDuplicates();
         }
 
-        return $locations;
+        return $locations->excludeDuplicates();
     }
 
     protected function instanceLocation(array $prediction): Location

@@ -28,11 +28,13 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
      *
      * @example ["street Main", "Main street"] => ["street Main"]
      * @example ["street Main", "Main st."] => ["street Main", "Main st."]
+     *
+     * @return LocationCollection without duplicated locations
      */
-    public function excludeDuplicates(): void
+    public function excludeDuplicates(): LocationCollection
     {
         if ($this->count() < 2) {
-            return;
+            return $this;
         }
 
         $explodedTerms = array_map(function (Location $location): array {
@@ -56,6 +58,8 @@ class LocationCollection extends \ArrayObject implements \JsonSerializable
         }
 
         $this->exchangeArray($result);
+
+        return $this;
     }
 
     public function append($value)
