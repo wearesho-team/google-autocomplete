@@ -25,6 +25,7 @@ class ServiceTest extends TestCase
     protected const INPUT = 'testInput';
     protected const DESCRIPTION = 'testDescription';
     protected const MAIN_TEXT = 'testMainText';
+    protected const COUNTRY = 'testCountry';
 
     /** @var GuzzleHttp\Handler\MockHandler */
     protected $mock;
@@ -45,7 +46,14 @@ class ServiceTest extends TestCase
         $stack = new GuzzleHttp\HandlerStack($this->mock);
         $stack->push($history);
         $this->client = new GuzzleHttp\Client(['handler' => $stack,]);
-        $this->fakeService = new Service(new Config(static::KEY, static::URL), $this->client);
+        $this->fakeService = new Service(
+            new Config(
+                static::KEY,
+                static::COUNTRY,
+                static::URL
+            ),
+            $this->client
+        );
     }
 
     /**
@@ -154,6 +162,15 @@ class ServiceTest extends TestCase
             [static::MAIN_TEXT,],
             $data->jsonSerialize()
         );
+
+        $this->assertCount(1, $this->container);
+        /** @var GuzzleHttp\Psr7\Request $request */
+        $request = $this->container[0]['request'];
+
+        $query = $request->getUri()->getQuery();
+        $searchQuery = http_build_query(['components' => 'country:testcountry']);
+
+        $this->assertTrue(mb_strpos($query, $searchQuery) !== false);
     }
 
     public function testStreets(): void
