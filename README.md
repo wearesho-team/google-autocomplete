@@ -4,6 +4,8 @@
 
 This library allows you to search cities/streets of concrete country using google api.
 
+[Changelog](./CHANGELOG.md)
+
 ## Installation
 
 ```bash
