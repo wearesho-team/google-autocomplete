@@ -8,5 +8,7 @@ namespace Wearesho\GoogleAutocomplete;
  */
 interface ServiceInterface
 {
-    public function load(SearchQueryInterface $query): LocationCollection;
+    public function load(Queries\Interfaces\SearchQueryInterface $query): ServiceInterface;
+
+    public function getResults(): LocationCollection;
 }

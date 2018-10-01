@@ -2,9 +2,8 @@
 
 namespace Wearesho\GoogleAutocomplete\Tests;
 
-use Wearesho\GoogleAutocomplete\Location;
-
 use PHPUnit\Framework\TestCase;
+use Wearesho\GoogleAutocomplete\Location;
 
 /**
  * Class LocationTest

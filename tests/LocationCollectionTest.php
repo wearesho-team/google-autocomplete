@@ -2,10 +2,9 @@
 
 namespace Wearesho\GoogleAutocomplete\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Wearesho\GoogleAutocomplete\Location;
 use Wearesho\GoogleAutocomplete\LocationCollection;
-
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class LocationCollectionTest
@@ -15,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LocationCollectionTest extends TestCase
 {
-    protected const VALUE = 'testValue';
+    protected const VALUE = 'test separated value';
 
     /** @var LocationCollection */
     protected $fakeLocationCollection;
@@ -34,5 +33,18 @@ class LocationCollectionTest extends TestCase
     public function testAppend(): void
     {
         $this->fakeLocationCollection->append(new \Exception());
+    }
+
+    public function testExcludeDuplicates(): void
+    {
+        $this->fakeLocationCollection = new LocationCollection();
+
+        for ($i = 0; $i < 200; $i++) {
+            $this->fakeLocationCollection->append(new Location(static::VALUE));
+        }
+
+        $this->assertCount(200, $this->fakeLocationCollection);
+        $this->fakeLocationCollection->excludeDuplicates();
+        $this->assertCount(1, $this->fakeLocationCollection);
     }
 }

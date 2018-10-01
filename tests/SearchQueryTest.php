@@ -4,79 +4,88 @@ namespace Wearesho\GoogleAutocomplete\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-use Wearesho\GoogleAutocomplete\SearchQuery;
 use Wearesho\GoogleAutocomplete\Enums;
+use Wearesho\GoogleAutocomplete\Queries\CitySearch;
+use Wearesho\GoogleAutocomplete\Queries\Interfaces\SearchQueryInterface;
+use Wearesho\GoogleAutocomplete\Queries\StreetSearch;
 
 /**
  * Class SearchQueryTest
  * @package Wearesho\GoogleAutocomplete\Tests
- * @coversDefaultClass SearchQuery
+ * @coversDefaultClass \Wearesho\GoogleAutocomplete\Queries\SearchQuery
  * @internal
  */
 class SearchQueryTest extends TestCase
 {
+    protected const TOKEN = 'token';
     protected const INPUT = 'testInput';
     protected const CITY = 'testCity';
+    protected const TYPE = 'testType';
 
-    /** @var SearchQuery */
+    /** @var SearchQueryInterface */
     protected $fakeSearchQuery;
 
-    protected function setUp(): void
+    public function testCitySearch(): void
     {
-        $this->fakeSearchQuery = new SearchQuery(
+        $this->fakeSearchQuery = new CitySearch(
+            static::TOKEN,
             static::INPUT,
-            Enums\AddressPart::CITY(),
             Enums\SearchLanguage::RU(),
-            static::CITY
+            Enums\SearchMode::FULL()
         );
-    }
 
-    public function testGetInput(): void
-    {
+        $this->assertEquals(
+            static::TOKEN,
+            $this->fakeSearchQuery->getToken()
+        );
         $this->assertEquals(
             static::INPUT,
             $this->fakeSearchQuery->getInput()
         );
-    }
-
-    public function testGetLanguage(): void
-    {
+        $this->assertEquals(
+            Enums\SearchMode::FULL(),
+            $this->fakeSearchQuery->getMode()
+        );
         $this->assertEquals(
             Enums\SearchLanguage::RU(),
             $this->fakeSearchQuery->getLanguage()
         );
-        $this->assertTrue(
-            $this->fakeSearchQuery->getLanguage()->equals(Enums\SearchLanguage::RU())
-        );
     }
 
-    public function testGetType(): void
+    public function testStreetSearch(): void
     {
+        $this->fakeSearchQuery = new StreetSearch(
+            static::TOKEN,
+            static::INPUT,
+            Enums\SearchLanguage::UK(),
+            static::CITY,
+            static::TYPE,
+            Enums\SearchMode::SHORT()
+        );
+
         $this->assertEquals(
-            Enums\AddressPart::CITY(),
+            static::TOKEN,
+            $this->fakeSearchQuery->getToken()
+        );
+        $this->assertEquals(
+            static::INPUT,
+            $this->fakeSearchQuery->getInput()
+        );
+        $this->assertEquals(
+            Enums\SearchMode::SHORT(),
+            $this->fakeSearchQuery->getMode()
+        );
+        $this->assertEquals(
+            Enums\SearchLanguage::UK(),
+            $this->fakeSearchQuery->getLanguage()
+        );
+        $this->assertEquals(
+            static::TYPE,
             $this->fakeSearchQuery->getType()
         );
-        $this->assertTrue(
-            $this->fakeSearchQuery->getType()->equals(Enums\AddressPart::CITY())
-        );
-    }
-
-    public function testGetCity(): void
-    {
         $this->assertEquals(
             static::CITY,
             $this->fakeSearchQuery->getCity()
         );
-    }
-
-    public function testNullCity(): void
-    {
-        $this->fakeSearchQuery = new SearchQuery(
-            static::INPUT,
-            Enums\AddressPart::CITY(),
-            Enums\SearchLanguage::RU(),
-            null
-        );
-        $this->assertNull($this->fakeSearchQuery->getCity());
     }
 }

@@ -54,16 +54,31 @@ $service = new \Wearesho\GoogleAutocomplete\Service(
 
 ### Create search data entity
 
+#### Session token
+
+A random string which identifies an autocomplete session for billing purposes for user
+In google-docs sad if this parameter is omitted from an autocomplete request, the request is billed independently. 
+So this service is binding to use it.
+
+*Recommended to use hash string*.
+
+```php
+<?php
+
+$token = 'any_random_string';
+```
+
 #### Searching cities
 ```php
 <?php
 
 use Wearesho\GoogleAutocomplete;
 
-$searchQuery = new GoogleAutocomplete\SearchQuery(
+$searchQuery = new GoogleAutocomplete\Queries\CitySearch(
+    $token,
     'Value from input',
-    $addressType = GoogleAutocomplete\Enums\AddressPart::CITY(),
-    $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
+    $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
+    $mode = GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
 );
 ```
 
@@ -73,21 +88,17 @@ $searchQuery = new GoogleAutocomplete\SearchQuery(
 
 use Wearesho\GoogleAutocomplete;
 
-// all streets
-$searchQuery = new GoogleAutocomplete\SearchQuery(
+$searchQuery = new GoogleAutocomplete\Queries\StreetSearch(
+    $token,
     'Value from input',
-    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
-    $language = GoogleAutocomplete\Enums\SearchLanguage::RU()
-);
-
-// Safe searching streets in concrete city
-$searchQuery = new GoogleAutocomplete\SearchQuery(
-    'Value from input',
-    $addressType = GoogleAutocomplete\Enums\AddressPart::STREET(),
     $language = GoogleAutocomplete\Enums\SearchLanguage::RU(),
-    $city = 'city name'
+    $city = 'city name', // optional
+    $type = 'avenue', // optional
+    $mode = GoogleAutocomplete\Enums\SearchMode::SHORT() // optional
 );
 ```
+
+If you want to customize your queries use [Query Interfaces](./src/Queries/Interfaces)
 
 ### Receive suggestions
 
@@ -95,11 +106,45 @@ $searchQuery = new GoogleAutocomplete\SearchQuery(
 <?php
 
 /** @var \Wearesho\GoogleAutocomplete\Service $service */
-/** @var \Wearesho\GoogleAutocomplete\SearchQueryInterface $searchQuery */
+/** @var \Wearesho\GoogleAutocomplete\Queries\Interfaces\SearchQueryInterface $searchQuery */
 
-$suggestions = $service->load($searchQuery);
+$service->load($searchQuery); // invoke query
+$suggestions = $service->getResults(); // get collection object of locations
+
+// or use it fluent
+$suggestions = $service->load($searchQuery)->getResults();
+
 $values = $suggestions->jsonSerialize();
 ```
+
+### Search mode
+
+Service have [2 modes](./src/Enums/SearchMode.php) for searching results:
+
+```php
+<?php
+
+use Wearesho\GoogleAutocomplete\Enums\SearchMode;
+
+/**
+ * This mode provide service for returning short names of locations
+ * 
+ * @example "Paris"
+ *          "Kharkov"
+ */
+$mode = SearchMode::SHORT();
+
+/**
+ * This mode provide service for returning full names of locations
+ * 
+ * @example "Paris, France"
+ *          "Kharkov, Kharkiv Oblast, Ukraine"
+ */
+$mode = SearchMode::FULL();
+```
+
+This parameter is optional.
+By default set FULL() mode.
 
 ## Yii2 configuration
 

@@ -8,19 +8,19 @@ use MyCLabs\Enum\Enum;
  * Class SearchStatus
  * @package Wearesho\GoogleAutocomplete\Enums
  *
- * @method static static OK()
- * @method static static ZERO_RESULTS()
- * @method static static OVER_QUERY_LIMIT()
- * @method static static REQUEST_DENIED()
- * @method static static INVALID_REQUEST()
- * @method static static UNKNOWN_ERROR()
+ * @method static SearchStatus OK()
+ * @method static SearchStatus ZERO_RESULTS()
+ * @method static SearchStatus OVER_QUERY_LIMIT()
+ * @method static SearchStatus REQUEST_DENIED()
+ * @method static SearchStatus INVALID_REQUEST()
+ * @method static SearchStatus UNKNOWN_ERROR()
  */
 final class SearchStatus extends Enum
 {
-    protected const OK = 'OK';
-    protected const ZERO_RESULTS = 'ZERO_RESULTS';
-    protected const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
-    protected const REQUEST_DENIED = 'REQUEST_DENIED';
-    protected const INVALID_REQUEST = 'INVALID_REQUEST';
-    protected const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
+    public const OK = 'OK';
+    public const ZERO_RESULTS = 'ZERO_RESULTS';
+    public const OVER_QUERY_LIMIT = 'OVER_QUERY_LIMIT';
+    public const REQUEST_DENIED = 'REQUEST_DENIED';
+    public const INVALID_REQUEST = 'INVALID_REQUEST';
+    public const UNKNOWN_ERROR = 'UNKNOWN_ERROR';
 }

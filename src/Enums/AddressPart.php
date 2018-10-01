@@ -10,6 +10,8 @@ use MyCLabs\Enum\Enum;
  *
  * @method static static STREET()
  * @method static static CITY()
+ *
+ * @deprecated
  */
 final class AddressPart extends Enum
 {
