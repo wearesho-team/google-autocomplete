@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 [Unreleased]
+## 2.0.0
 ### Added
 - Required session token for requesting to Google-api-service;
 - Short/Full search mode for queries;
