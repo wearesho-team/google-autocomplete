@@ -150,19 +150,7 @@ By default set FULL() mode.
 
 ## Yii2 configuration
 
-If you need to configure your yii2 application, you can use [Bootstrap](./src/Yii/Bootstrap.php)
-
-```php
-<?php
-
-// config/main.php
-
-return [
-    'bootstrap' => [
-        'class' => \Wearesho\GoogleAutocomplete\Yii\Bootstrap::class,        
-    ],
-];
-```
+If you need to configure your yii2 application, you can use this [yii extension](https://github.com/wearesho-team/yii2-google-autocomplete), that depend on this package
 
 ## Contributing
 
