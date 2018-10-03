@@ -38,8 +38,5 @@
     "lint": "./vendor/bin/phpcs --standard=PSR2 ./src ./tests",
     "phpcbf": "./vendor/bin/phpcbf --standard=PSR2 ./src ./tests",
     "test": "./vendor/bin/phpunit"
-  },
-  "suggests": {
-    "yiisoft/yii2": "If you want to configure your yii application easily with bootstrap"
   }
 }
