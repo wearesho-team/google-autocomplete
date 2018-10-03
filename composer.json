@@ -40,6 +40,6 @@
     "test": "./vendor/bin/phpunit"
   },
   "suggests": {
-    "yiisoft/yii2": "If you want to configure your yii application easily with bootstrap"
+    "wearesho-team/yii2-google-autocomplete": "If you want to integrate it to your yii application"
   }
 }
