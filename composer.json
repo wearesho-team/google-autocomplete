@@ -2,6 +2,7 @@
   "name": "wearesho-team/google-autocomplete",
   "description": "Service for searching cities and streets using passed input value",
   "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "Beton",
