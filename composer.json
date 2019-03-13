@@ -41,7 +41,7 @@
     "phpcbf": "./vendor/bin/phpcbf --standard=PSR2 ./src ./tests",
     "test": "./vendor/bin/phpunit"
   },
-  "suggests": {
+  "suggest": {
     "wearesho-team/yii2-google-autocomplete": "If you want to integrate it to your yii application"
   }
 }
